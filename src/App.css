@@ -1,0 +1,239 @@
+body {
+  background: linear-gradient(-45deg, #0d1627, #211944, #031544);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* background: #171717; */
+  background: #dadada;
+  border-radius: 1em;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* 
+.active {
+  background-color: #7b5eea;
+  color: #fff !important;
+} */
+
+.ant-menu {
+  background-color: transparent;
+}
+
+.ant-menu-submenu-title {
+  padding: 8px 12px !important;
+  margin: 0 !important;
+  width: 100% !important;
+  font-size: 0.875rem /* 14px */ !important;
+  line-height: 1.25rem /* 20px */ !important;
+  color: #8799bf !important;
+}
+
+.ant-menu-submenu-title:hover {
+  color: white !important;
+  background-color: #000000e0 !important;
+}
+
+.ant-menu-title-content {
+  color: #8799bf !important;
+}
+
+.ant-menu-title-content:hover {
+  color: white !important;
+}
+
+.ant-menu-submenu-title:hover > .ant-menu-title-content {
+  color: white !important;
+}
+
+.ant-menu-item {
+  padding-left: 50px !important;
+  color: #8799bf !important;
+}
+
+.ant-menu-root > li:first-child,
+.ant-menu-root > li:nth-child(2),
+.ant-menu-root > li:nth-child(3),
+.ant-menu-root > li:nth-child(4),
+.ant-menu-root > li:nth-child(5),
+.ant-menu-root > li:nth-child(6),
+.ant-menu-root > li:nth-child(7) {
+  padding-left: 8px !important;
+}
+
+.ant-menu-root > .ant-menu-item-group > .ant-menu-item-group-title {
+  padding: 8px 12px !important;
+}
+
+.ant-menu-item-group-title {
+  color: #8799bf !important;
+  padding-left: 36px !important;
+}
+
+.ant-menu-item:hover,
+.ant-menu-item:active {
+  color: white !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #7b5eea !important;
+}
+
+.ant-menu-item-selected .ant-menu-title-content {
+  color: #fff !important;
+}
+
+.ant-menu-item-selected .anticon {
+  color: white !important; /* Đổi màu text và icon */
+}
+
+.ant-input {
+  color: white !important;
+  font-size: 12px !important;
+}
+
+.ant-input-group-addon {
+  border-color: #3b465e !important;
+}
+
+.ant-input-affix-wrapper {
+  background-color: transparent;
+}
+
+.ant-input-affix-wrapper input::placeholder {
+  color: #8799bf;
+  font-size: 12px;
+}
+
+.ant-input-affix-wrapper:hover {
+  background-color: transparent;
+}
+
+.ant-input-affix-wrapper:focus-within {
+  background-color: transparent;
+}
+
+.ant-input-outlined {
+  border-color: #3b465e !important;
+}
+
+.ant-modal-content {
+  background: linear-gradient(-45deg, #0d1627, #211944, #031544) !important;
+}
+
+.ant-modal-header {
+  background-color: transparent !important;
+}
+
+.ant-modal-title {
+  color: white !important;
+}
+
+.ant-modal-close {
+  color: white !important;
+}
+
+.ant-picker-input input::placeholder {
+  color: #8799bf !important;
+  font-size: 10px !important;
+}
+
+.ant-picker-separator,
+.ant-picker-suffix {
+  color: #8799bf !important;
+}
+
+.ant-transfer-list {
+  border-color: #3b465e !important;
+}
+
+.ant-transfer-list-header,
+.ant-table,
+.ant-table-placeholder,
+.ant-empty-description {
+  background-color: transparent !important;
+  color: #8799bf !important;
+}
+
+:where(.css-dev-only-do-not-override-161f05s).ant-table-wrapper
+  .ant-table-thead
+  > tr
+  > th,
+:where(.css-dev-only-do-not-override-161f05s).ant-table-wrapper
+  .ant-table-thead
+  > tr
+  > td {
+  background-color: transparent !important;
+  color: #8799bf !important;
+  border-color: transparent !important;
+}
+
+.ant-table-cell {
+  font-size: 10px !important;
+  padding: 4px !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  border-color: transparent !important;
+}
+
+.ant-drawer-content {
+  background: linear-gradient(-45deg, #0d1627, #211944, #031544) !important;
+}
+
+.ant-drawer-close {
+  color: white !important;
+}
+
+.j9ygOVxEl2nClTPs77Ta,
+.sCsSbKP9yxvw4LQAeaTz,
+.ji5jASszKFf2CGCmbxEh,
+.D9WLyEQaARfWqCTyVrpU {
+  background-color: transparent !important;
+}
+
+.D9WLyEQaARfWqCTyVrpU {
+  width: 100% !important;
+}
+
+.QajuHzlZleFtiTUp_E8u .D9WLyEQaARfWqCTyVrpU {
+  box-shadow: none !important;
+  border-color: #3b465e !important;
+}
+
+.pOvRwHj19chJGkgemUH3 ._M8cCug8H18ALQ05cNMt {
+  color: white !important;
+}
+
+.ant-select-selector {
+  background-color: transparent !important;
+  border-color: #3b465e !important;
+  color: #8799bf !important;
+  font-size: 10px !important;
+}
+
+.ant-select-arrow {
+  color: #8799bf !important;
+}
+
+.ant-select-selection-placeholder,
+.ant-select-selection-item-remove {
+  color: #8799bf !important;
+}
+
+/* .ant-select:first .ant-select-selection-item {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-select:first .ant-select-selection-item-content {
+  color: #fff !important;
+} */
