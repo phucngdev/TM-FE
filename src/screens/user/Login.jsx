@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import CryptoJS from "crypto-js";
+import Cookies from "js-cookie";
 
 import {
   AliyunOutlined,
@@ -75,6 +76,9 @@ const Login = () => {
         ]);
 
         if (response.payload?.status === 200) {
+          Cookies.set("isLogin", true, {
+            expires: new Date(Date.now() + 15 * 60 * 1000),
+          });
           navigate("/");
         } else if (response.payload?.response?.status === 500) {
           message.error("Invalid email or password");
