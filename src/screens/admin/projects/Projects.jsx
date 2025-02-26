@@ -19,11 +19,13 @@ import LeftSide from "../../../components/admin/projects/shared/LeftSide";
 import CreateTask from "../../../components/admin/projects/tasks/CreateTask";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneProject } from "../../../services/admin/project.service";
+import AddMember from "../../../components/admin/teams/create/AddMember";
 
 const Projects = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isModalCreate, setIsModalCreate] = useState(false);
+  const [isModalAddMember, setIsModalAddMember] = useState(false);
   const [loading, setLoading] = useState(false);
   const colors = ["#f56a00", "#87d068", "#1677ff", "#51e7c6"];
 
@@ -39,10 +41,13 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (id) {
+      fetchData();
+    }
   }, [id]);
 
   const project = useSelector((state) => state.project.dataEdit);
+  const donePercent = useSelector((state) => state.tasks.donePercent);
 
   return (
     <>
@@ -50,8 +55,15 @@ const Projects = () => {
         setIsModalCreate={setIsModalCreate}
         isModalCreate={isModalCreate}
       />
+      <AddMember
+        title={"Add Member"}
+        isModalCreate={isModalAddMember}
+        setIsModalCreate={setIsModalAddMember}
+        newPersonnel={false}
+        oldMember={project?.members}
+      />
       <div className="flex items-start gap-2">
-        {loading ? (
+        {loading && !project ? (
           <>
             <Skeleton.Node
               active
@@ -74,11 +86,11 @@ const Projects = () => {
                       <div className="w-[200px] h-1 bg-white bg-opacity-50">
                         <div
                           className={`h-full bg-primary`}
-                          style={{ width: `${project?.progress}%` }}
+                          style={{ width: `${donePercent}%` }}
                         ></div>
                       </div>
                       <p className="text-s text-secondary">
-                        {project?.progress}% complete
+                        {donePercent}% complete
                       </p>
                     </div>
                   </div>
@@ -103,7 +115,11 @@ const Projects = () => {
                       </Avatar>
                     ))}
                   </Avatar.Group>
-                  <button className="bg-primary px-3 py-2 rounded-md fle items-center gap-2 justify-center text-[12px] text-white hover:bg-opacity-70 active:bg-opacity-40">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalAddMember(true)}
+                    className="bg-primary px-3 py-2 rounded-md fle items-center gap-2 justify-center text-[12px] text-white hover:bg-opacity-70 active:bg-opacity-40"
+                  >
                     <PlusOutlined /> Add Member
                   </button>
                 </div>

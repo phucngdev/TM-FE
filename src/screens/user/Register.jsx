@@ -15,10 +15,10 @@ import {
   EyeInvisibleTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
-import { login } from "../../services/user/auth.service";
 import Loading from "../../components/shared/animation/Loading";
+import { register } from "../../services/user/auth.service";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentRef = useRef();
@@ -40,17 +40,27 @@ const Login = () => {
     initialValues: {
       email: "",
       password: "",
+      confirm_password: "",
+      username: "",
+      phone: null,
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .email("* Invalid email")
         .required("* Email cannot be empty"),
       password: Yup.string().required("* Password cannot be empty"),
+      confirm_password: Yup.string()
+        .oneOf([Yup.ref("password"), null], "* Confirm password does not match")
+        .required("* Confirm password cannot be empty"),
+      username: Yup.string().required("* Username cannot be empty"),
+      phone: Yup.number().required("* Phone cannot be empty"),
     }),
     onSubmit: async (values, { resetForm }) => {
       const dataUser = {
         email: values.email,
         password: values.password,
+        name: values.username,
+        phone: values.phone,
       };
       // Mã hóa dữ liệu trước khi gửi
       const encryptedData = CryptoJS.AES.encrypt(
@@ -61,25 +71,11 @@ const Login = () => {
       const payload = { encryptedData }; // Gửi object chứa dữ liệu mã hóa
 
       setLoading(true);
-      // Hàm timeout sau 5 giây
-      const timeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Request timed out")), 8000)
-      );
 
       try {
-        // Chạy cả hai Promise (login request và timeout)
-        const response = await Promise.race([
-          dispatch(login(payload)),
-          timeout,
-        ]);
-
-        if (response.payload?.status === 200) {
-          Cookies.set("isLogin", true, {
-            expires: new Date(Date.now() + 15 * 60 * 1000),
-          });
-          navigate("/");
-        } else if (response.payload?.response?.status === 500) {
-          message.error("Invalid email or password");
+        const response = await dispatch(register(payload));
+        if (response.payload?.status === 201) {
+          navigate("/login");
         }
       } catch (error) {
         message.error(error.message); // Hiển thị lỗi khi timeout
@@ -92,15 +88,15 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login</title>
+        <title>Register</title>
       </Helmet>
       {loading && <Loading />}
       <section className="">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-          <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+          <section className="relative flex h-32 items-end lg:col-span-5 lg:h-full xl:col-span-6">
             <img
               alt=""
-              src={frieren}
+              src={frieren2}
               className="absolute inset-0 h-full w-full object-cover opacity-80"
             />
 
@@ -149,11 +145,11 @@ const Login = () => {
                   </svg>
                 </Link>
 
-                <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+                <h1 className="mt-2 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                   Welcome to Task Manager 🦑
                 </h1>
 
-                <p className="mt-4 leading-relaxed text-gray-500">
+                <p className="mt-4 leading-relaxed text-secondary">
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt
                   quis laborum saepe quae accusantium officiis adipisci
                   accusamus iusto corporis distinctio, nisi itaque repellendus
@@ -167,7 +163,7 @@ const Login = () => {
               >
                 <div className="col-span-6 text-3xl text-white font-semibold flex items-center justify-center">
                   {/* <img src={logo} alt="" /> */}
-                  Login
+                  Register
                 </div>
                 <h2 className="text-xl text-white text-center col-span-6">
                   Enjoy Your Work!
@@ -230,6 +226,87 @@ const Login = () => {
                     </div>
                   ) : null}
                 </div>
+                <div className="col-span-6 ">
+                  <label
+                    htmlFor="ConfirmPassword"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Confirm Password
+                  </label>
+
+                  <Input.Password
+                    placeholder="Confirm Password"
+                    type="text"
+                    id="ConfirmPassword"
+                    name="confirm_password"
+                    value={formik.values.confirm_password}
+                    onChange={formik.handleChange}
+                    className="mt-1 w-full rounded-md border py-2 px-2 text-[12px] shadow-sm bg-transparent hover:bg-transparent active:bg-transparent text-white focus-within:bg-transparent placeholder:text-secondary border-border"
+                    iconRender={(visible) =>
+                      visible ? (
+                        <EyeTwoTone twoToneColor="#fff" />
+                      ) : (
+                        <EyeInvisibleTwoTone twoToneColor="#fff" />
+                      )
+                    }
+                  />
+
+                  {formik.touched.confirm_password &&
+                  formik.errors.confirm_password ? (
+                    <div className="text-red-500 text-[12px] ">
+                      {formik.errors.confirm_password}
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="col-span-6 ">
+                  <label
+                    htmlFor="ConfirmPassword"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Username
+                  </label>
+
+                  <Input
+                    placeholder="Username"
+                    type="text"
+                    id="Username"
+                    name="username"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    className="mt-1 w-full rounded-md border py-2 px-2 text-[12px] shadow-sm bg-transparent hover:bg-transparent active:bg-transparent text-white focus-within:bg-transparent placeholder:text-secondary border-border"
+                  />
+
+                  {formik.touched.username && formik.errors.username ? (
+                    <div className="text-red-500 text-[12px] ">
+                      {formik.errors.username}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="col-span-6 ">
+                  <label
+                    htmlFor="ConfirmPassword"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Phone
+                  </label>
+
+                  <Input
+                    placeholder="Phone"
+                    type="text"
+                    id="Phone"
+                    name="phone"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    className="mt-1 w-full rounded-md border py-2 px-2 text-[12px] shadow-sm bg-transparent hover:bg-transparent active:bg-transparent text-white focus-within:bg-transparent placeholder:text-secondary border-border"
+                  />
+
+                  {formik.touched.phone && formik.errors.phone ? (
+                    <div className="text-red-500 text-[12px] ">
+                      {formik.errors.phone}
+                    </div>
+                  ) : null}
+                </div>
                 <div className="col-span-6 border-border text-sm text-white flex gap-3 items-center justify-center">
                   <div className="h-[2px] flex-1 bg-border"></div>
                   OR
@@ -268,26 +345,25 @@ const Login = () => {
                     type="submit"
                     className="inline-block shrink-0 rounded-md border border-primary bg-primary px-12 py-3 text-[12px] font-medium text-white transition hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary active:bg-white active:bg-opacity-10"
                   >
-                    Login
+                    Register
                   </button>
-
                   <p className="mt-4 text-[12px] text-secondary sm:mt-0">
-                    Forgot password?{" "}
-                    <Link to="#" className="text-white underline">
+                    You have an account?{" "}
+                    <Link to="/login" className="text-white underline">
                       Click here
                     </Link>
                     .
                   </p>
                 </div>
-                <div className="col-span-6 text-center">
+                {/* <div className="col-span-6 text-center">
                   <p className="mt-4 text-[12px] text-secondary sm:mt-0">
-                    Don't have an account?{" "}
-                    <Link to="/register" className="text-white underline">
+                    You have an account?{" "}
+                    <Link to="/login" className="text-white underline">
                       Click here
                     </Link>
                     .
                   </p>
-                </div>
+                </div> */}
               </form>
             </div>
           </main>
@@ -297,4 +373,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

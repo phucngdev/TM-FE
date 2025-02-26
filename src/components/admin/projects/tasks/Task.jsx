@@ -2,13 +2,15 @@ import {
   EllipsisOutlined,
   EyeOutlined,
   MessageOutlined,
+  VerticalAlignMiddleOutlined,
 } from "@ant-design/icons";
-import React from "react";
+import React, { useState } from "react";
 import { Avatar } from "antd";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import TaskDetail from "./TaskDetail";
 
-const Task = ({ task }) => {
+const Task = ({ onOpenModal, task }) => {
   const {
     attributes,
     listeners,
@@ -16,13 +18,18 @@ const Task = ({ task }) => {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: task._id, data: { ...task } });
+  } = useSortable({
+    id: task._id,
+    data: { ...task },
+    onPointerDownCapture: (event) => event.preventDefault(),
+  });
 
   const dndkitStyle = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : undefined,
   };
+
   return (
     <>
       {task && (
@@ -30,9 +37,16 @@ const Task = ({ task }) => {
           ref={setNodeRef}
           style={dndkitStyle}
           {...attributes}
-          {...listeners}
-          className="p-2 max-h-40 min-h-40 rounded-lg flex flex-col justify-between bg-white bg-opacity-10 cursor-pointer hover:bg-opacity-20 hover:rotate-3 transition duration-150"
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenModal(task);
+          }}
+          className="relative p-2 max-h-40 min-h-40 rounded-lg flex flex-col justify-between bg-white bg-opacity-10 cursor-pointer hover:bg-opacity-20 hover:rotate-3 transition duration-150"
         >
+          <div
+            {...listeners}
+            className="absolute top-0 right-0 size-16 rounded-bl-full rounded-tr-lg bg-white bg-opacity-20 hover:bg-opacity-25"
+          ></div>
           <div className="">
             <div className="flex items-center justify-between text-secondary ">
               <div className="flex items-center gap-1">
@@ -45,7 +59,7 @@ const Task = ({ task }) => {
                   </p>
                 ))}
               </div>
-              <EllipsisOutlined className="text-xl" />
+              <VerticalAlignMiddleOutlined />
             </div>
             <h5 className="text-[12px] py-2 text-white">{task.title}</h5>
             <p className="text-s text-secondary max-h-12 overflow-hidden text-ellipsis">

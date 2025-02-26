@@ -4,7 +4,6 @@ import {
   isFulfilled,
   isRejected,
 } from "@reduxjs/toolkit";
-import { login } from "../../services/admin/auth.service";
 
 const authSlice = createSlice({
   name: "auth",

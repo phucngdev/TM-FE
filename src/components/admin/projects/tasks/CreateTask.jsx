@@ -1,11 +1,17 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Modal, Select, Input, DatePicker, message } from "antd";
+import {
+  CloseOutlined,
+  HolderOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createTag, getAllTags } from "../../../../services/admin/tag.service";
 import { useParams } from "react-router-dom";
 import { createTask } from "../../../../services/admin/task.service";
+import Loading from "../../../shared/animation/Loading";
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -22,14 +28,19 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
   const user = useSelector((state) => state.user.data);
   const tags = useSelector((state) => state.tags.data);
   const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isNewTag, setIsNewTag] = useState(false);
   const [newTag, setNewTag] = useState("");
+  const [taskCase, setTaskCase] = useState([""]);
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       await dispatch(getAllTags(id));
     } catch (error) {
       message.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,6 +88,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
     }),
     onSubmit: async (values, { resetForm }) => {
       setDisabled(true);
+      setLoading(true);
       const newTask = {
         title: values.title,
         description: values.description,
@@ -87,11 +99,16 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
         project: id,
         tags: values.tags,
         created_by: user._id,
+        task_case: taskCase,
       };
-      await dispatch(createTask(newTask));
+      const response = await dispatch(createTask(newTask));
+      if (response.payload.status === 201) {
+        message.success(response.payload.message);
+        setIsModalCreate(false);
+      }
       resetForm();
-      setIsModalCreate(false);
       setDisabled(false);
+      setLoading(false);
     },
   });
 
@@ -111,6 +128,17 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
     }
   };
 
+  const handleAddTaskCase = () => {
+    setTaskCase([...taskCase, ""]);
+  };
+
+  const handleRemoveTaskCase = (index) => {
+    if (taskCase.length <= 1) return;
+    setTaskCase(taskCase.filter((_, i) => i !== index));
+  };
+
+  if (loading) return <Loading />;
+
   return (
     <>
       <Modal
@@ -120,7 +148,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
         onCancel={() => setIsModalCreate(false)}
         footer={null}
       >
-        <form onSubmit={formik.handleSubmit} className="">
+        <form onSubmit={formik.handleSubmit} className="relative">
           <div className="flex items-center gap-4 mt-4">
             <div className="flex flex-col flex-1">
               <label className="text-[12px] text-secondary" htmlFor="">
@@ -146,7 +174,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
               </label>
               <Select
                 id="status"
-                placeholder="status"
+                placeholder={status ? status : "status"}
                 defaultValue={formik.values.status}
                 value={formik.values.status}
                 onChange={(value) => formik.setFieldValue("status", value)}
@@ -280,6 +308,45 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
                 {formik.errors.start_date}
               </div>
             ) : null}
+          </div>
+
+          <div className="flex flex-col mt-4">
+            <label className="text-[12px] text-secondary" htmlFor="">
+              Task Case:
+            </label>
+            {taskCase.map((t, index) => (
+              <div key={index} className="flex items-center gap-3 mb-2">
+                <HolderOutlined className="text-secondary" />
+                <Input
+                  id="task_case"
+                  type="text"
+                  value={taskCase[index]}
+                  onChange={(e) =>
+                    setTaskCase([
+                      ...taskCase.slice(0, index),
+                      e.target.value,
+                      ...taskCase.slice(index + 1),
+                    ])
+                  }
+                  placeholder="task case"
+                  className="hover:bg-transparent active:bg-transparent focus-within:bg-transparent placeholder:text-secondary bg-transparent border border-border text-s text-white rounded-lg p-2 placeholder:text-s"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTaskCase(index)}
+                  className="text-secondary hover:text-white"
+                >
+                  <CloseOutlined />
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => handleAddTaskCase()}
+              className="mt-2 flex items-center justify-center border cursor-pointer border-border rounded-md py-1 bg-white bg-opacity-5 hover:bg-opacity-10 text-secondary"
+            >
+              Add task case
+            </button>
           </div>
           <div className="flex items-center justify-between gap-4 mt-8">
             <button

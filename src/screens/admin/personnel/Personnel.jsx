@@ -1,9 +1,9 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, SmileOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import AddMember from "../../../components/admin/teams/create/AddMember";
 import { useDispatch, useSelector } from "react-redux";
-import { message, Skeleton, Spin } from "antd";
+import { message, Result, Skeleton, Spin } from "antd";
 import { getAllPersonnel } from "../../../services/admin/personnel.service";
 
 const Personnel = () => {
@@ -26,6 +26,8 @@ const Personnel = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const personnels = useSelector((state) => state.personnel.data);
 
   return (
     <>
@@ -79,7 +81,30 @@ const Personnel = () => {
             </div>
           </>
         ) : (
-          <Outlet />
+          <>
+            {personnels.length === 0 ? (
+              <Result
+                icon={<SmileOutlined className="!text-primary" />}
+                title={
+                  <>
+                    <span className="text-white">
+                      Great, let's get started with your first project!
+                    </span>
+                  </>
+                }
+                extra={
+                  <button
+                    onClick={() => setIsModalCreate(true)}
+                    className="bg-primary text-white hover:bg-opacity-60 px-3 py-2 rounded-md"
+                  >
+                    New Personnel
+                  </button>
+                }
+              />
+            ) : (
+              <Outlet />
+            )}
+          </>
         )}
       </div>
     </>

@@ -39,7 +39,7 @@ const Main = () => {
   const data = useSelector((state) => state.project.data);
 
   useEffect(() => {
-    if (data.length > 0) {
+    if (data?.length > 0) {
       setProjects(data);
     }
   }, [data]);

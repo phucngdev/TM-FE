@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAllTasks } from "../../../services/admin/task.service";
 import CreateTask from "../../../components/admin/projects/tasks/CreateTask";
+import TaskDetail from "../../../components/admin/projects/tasks/TaskDetail";
 
 const Tasks = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,14 @@ const Tasks = () => {
   const [activeId, setActiveId] = useState(null);
   const [status, setStatus] = useState(null);
   const [isModalCreate, setIsModalCreate] = useState(false);
+  const [isModalTask, setIsModalTask] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const handleOpenModalTask = (task) => {
+    setSelectedTask(task);
+    setIsModalTask(true);
+  };
 
   const fetchData = async () => {
     try {
@@ -41,7 +49,9 @@ const Tasks = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (id) {
+      fetchData();
+    }
   }, [id]);
 
   const tasks = useSelector((state) => state.tasks.data);
@@ -71,6 +81,11 @@ const Tasks = () => {
         isModalCreate={isModalCreate}
         setIsModalCreate={setIsModalCreate}
         status={status}
+      />
+      <TaskDetail
+        taskId={selectedTask?._id}
+        isModalTask={isModalTask}
+        setIsModalTask={setIsModalTask}
       />
       <div className="flex items-center justify-between mt-3">
         <Input
@@ -167,7 +182,11 @@ const Tasks = () => {
             >
               <div className="flex flex-col gap-3">
                 {taskList.map((task) => (
-                  <Task task={task} key={task._id} />
+                  <Task
+                    task={task}
+                    key={task._id}
+                    onOpenModal={handleOpenModalTask}
+                  />
                 ))}
               </div>
             </SortableContext>

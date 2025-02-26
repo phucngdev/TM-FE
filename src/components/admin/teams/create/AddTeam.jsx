@@ -66,6 +66,7 @@ const AddTeam = ({ isModalCreate, setIsModalCreate }) => {
         status: values.status,
         leader: values.leader,
         createdBy: user._id,
+        admin: user._id,
       };
       const res = await dispatch(createTeam(dataTeam));
       if (res.payload.status === 201) {

@@ -46,9 +46,45 @@ const LeftSide = () => {
           <h3 className="text-base text-white font-jetbrains mt-5">
             Team members
           </h3>
+          <div className="flex flex-col gap-1 my-2">
+            <div
+              className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}
+            >
+              <div className="flex items-center gap-1">
+                <Avatar className="bg-[#fde3cf] text-[#f56a00]">
+                  {project.PM.name[0]}
+                </Avatar>
+                <div className="">
+                  <p className="text-[12px]">{project.PM.name}</p>
+                  <p className="text-s">{project.PM.role}</p>
+                </div>
+              </div>
+              <div className="">
+                <DownOutlined />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 my-2">
+            <div
+              className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}
+            >
+              <div className="flex items-center gap-1">
+                <Avatar className="bg-[#fde3cf] text-[#f56a00]">
+                  {project.leader.name[0]}
+                </Avatar>
+                <div className="">
+                  <p className="text-[12px]">{project.leader.name}</p>
+                  <p className="text-s">{project.leader.role}</p>
+                </div>
+              </div>
+              <div className="">
+                <DownOutlined />
+              </div>
+            </div>
+          </div>
           {project.members.map((member) => (
             <>
-              <div className="flex flex-col gap-1 mb-2 mt-2">
+              <div className="flex flex-col gap-1 my-2">
                 <div
                   key={member._id}
                   className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}

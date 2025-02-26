@@ -17,3 +17,21 @@ export const formatDate = (date) => {
 };
 
 // console.log(formatDate(new Date())); // "2025-01-11"
+
+export const formatDateTime = (dateString) => {
+  const date = new Date(dateString);
+
+  const options = { month: "short", day: "numeric", year: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
+
+  const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
+  const formattedTime = new Intl.DateTimeFormat("en-US", timeOptions).format(
+    date
+  );
+
+  return `${formattedDate} - ${formattedTime}`;
+};
+
+// 💡 Ví dụ sử dụng:
+// const now = new Date();
+// console.log(formatDate(now)); // 👉 "Feb 21, 2025 - 8:49 AM"

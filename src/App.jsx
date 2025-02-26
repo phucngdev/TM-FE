@@ -20,6 +20,7 @@ const PrivateRoute = lazy(() => import("./routes/admin/PrivateRoute"));
 const Dashboard = lazy(() => import("./screens/admin/Dashboard"));
 const Projects = lazy(() => import("./screens/admin/projects/Projects"));
 import ManagerPersonnel from "./screens/admin/personnel/ManagerPersonnel";
+import Register from "./screens/user/Register";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route index element={<Overview />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/" element={<PrivateRoute />}>
             <Route index element={<Dashboard />} />
             <Route path="*" element={<NotFound />} />

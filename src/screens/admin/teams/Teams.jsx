@@ -88,6 +88,7 @@ const Teams = () => {
         isModalCreate={isModalCreate}
         setIsModalCreate={setIsModalCreate}
         newPersonnel={false}
+        oldMember={team?.members}
       />
       <div className="flex items-start gap-2">
         <LeftSide team={team} />

@@ -20,12 +20,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createProject } from "../../../services/admin/project.service";
+import { useNavigate } from "react-router-dom";
+import { formatDateTime } from "../../../utils/formatJoinDate";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
 const CreateProject = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const teams = useSelector((state) => state.teams.data);
   const personnel = useSelector((state) => state.personnel.data);
   const user = useSelector((state) => state.user.data);
@@ -65,7 +68,7 @@ const CreateProject = () => {
   };
 
   const handleRemoveReq = (index) => {
-    if (index === 0) return;
+    if (requests.length <= 1) return;
     setRequests(requests.filter((_, i) => i !== index));
   };
 
@@ -85,7 +88,7 @@ const CreateProject = () => {
   };
 
   const handleRemoveDocs = (indexCurrent, indexDoc) => {
-    if (indexCurrent === 0 && indexDoc === 0) return;
+    if (documents[indexCurrent].docs.length <= 1) return;
     setDocuments(
       documents.map((doc, index) =>
         index === indexCurrent
@@ -99,7 +102,7 @@ const CreateProject = () => {
   };
 
   const handleRemoveTitle = (index) => {
-    if (index === 0) return;
+    if (documents.length <= 1) return;
     setDocuments(documents.filter((_, i) => i !== index));
   };
 
@@ -175,6 +178,7 @@ const CreateProject = () => {
         documents: documents,
         created_by: user._id,
         PM: user._id,
+        admin: user._id,
       };
       console.log("🚀 ~ onSubmit: ~ dataProject:", dataProject);
 
@@ -189,7 +193,12 @@ const CreateProject = () => {
       // setLoading(true);
 
       try {
-        await dispatch(createProject(dataProject));
+        const response = await dispatch(createProject(dataProject));
+        if (response.payload.status === 201) {
+          message.success(response.payload.message);
+          navigate("/projects");
+          resetForm();
+        }
       } catch (error) {
         message.error(error.message); // Hiển thị lỗi khi timeout
       } finally {
@@ -524,7 +533,7 @@ const CreateProject = () => {
                         </p>
                       </td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <td className="">PM:</td>
                       <td className="flex items-center gap-1 text-white">
                         <Avatar size={15} className="bg-[#3b50d6]">
@@ -532,20 +541,22 @@ const CreateProject = () => {
                         </Avatar>{" "}
                         Tony Start
                       </td>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <td className="">Created by:</td>
                       <td className="flex items-center gap-1 text-white">
                         <Avatar size={15} className="bg-[#1c5c1d]">
-                          A
+                          {user.name[0]}
                         </Avatar>{" "}
-                        Adison Tombell
+                        {user.name}
                       </td>
                     </tr>
 
                     <tr>
                       <td className="">Created at:</td>
-                      <td className="text-white">Dec 31, 2024 - 8:49 AM</td>
+                      <td className="text-white">
+                        {formatDateTime(new Date())}
+                      </td>
                     </tr>
                     {/* <tr>
                       <td className="">Updated:</td>

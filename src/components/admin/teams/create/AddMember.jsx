@@ -12,24 +12,31 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import CryptoJS from "crypto-js";
 import { createPersonnel } from "../../../../services/admin/personnel.service";
+import { formatDate } from "../../../../utils/formatJoinDate";
 
 const AddMember = ({
   title,
   isModalCreate,
   setIsModalCreate,
   newPersonnel,
+  oldMember,
 }) => {
   const dispatch = useDispatch();
   const personnel = useSelector((state) => state.personnel.data);
+  const user = useSelector((state) => state.user.data);
 
   const members = useMemo(() => {
     return personnel
-      ?.filter((member) => member.role === "Member")
+      ?.filter(
+        (member) =>
+          member.role === "Member" &&
+          (newPersonnel || !oldMember?.some((old) => old._id === member._id))
+      )
       ?.map((member) => ({
         label: member.name,
         value: member._id,
       }));
-  }, [personnel]);
+  }, [personnel, oldMember, newPersonnel]);
 
   const formik = useFormik({
     initialValues: {
@@ -56,6 +63,7 @@ const AddMember = ({
         password: values.password,
         phone: values.phone,
         role: values.role,
+        admin: user._id,
       };
       // Mã hóa dữ liệu trước khi gửi
       const encryptedData = CryptoJS.AES.encrypt(
@@ -215,10 +223,10 @@ const AddMember = ({
             <div className="flex-1 flex flex-col">
               <span className="text-[12px] text-secondary">More:</span>
               <div className="flex items-center gap-2 text-secondary text-s">
-                <UserAddOutlined /> Created by: Tony start
+                <UserAddOutlined /> Created by: {user.name}
               </div>
               <div className="flex items-center gap-2 text-secondary text-s">
-                <ClockCircleOutlined /> Created at: 2025-01-11
+                <ClockCircleOutlined /> Created at: {formatDate(new Date())}
               </div>
             </div>
           </div>
