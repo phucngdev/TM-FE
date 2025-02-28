@@ -38,6 +38,24 @@ const AddMember = ({
       }));
   }, [personnel, oldMember, newPersonnel]);
 
+  const leaders = useMemo(() => {
+    return personnel
+      ?.filter((member) => member.role === "Lead")
+      ?.map((member) => ({
+        label: member.name,
+        value: member._id,
+      }));
+  }, [personnel]);
+
+  const PMs = useMemo(() => {
+    return personnel
+      ?.filter((member) => member.role === "PM")
+      ?.map((member) => ({
+        label: member.name,
+        value: member._id,
+      }));
+  }, [personnel]);
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -46,15 +64,19 @@ const AddMember = ({
       phone: null,
       role: "Member",
       members: [],
+      leader: null,
+      PM: null,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Username cannot be empty"),
+      name: Yup.string().required("* Username cannot be empty"),
       email: Yup.string()
-        .email("Invalid email")
-        .required("Email cannot be empty"),
-      password: Yup.string().required("Password cannot be empty"),
-      phone: Yup.string().required("Phone cannot be empty"),
-      role: Yup.string().required("Role cannot be empty"),
+        .email("* Invalid email")
+        .required("* Email cannot be empty"),
+      password: Yup.string().required("* Password cannot be empty"),
+      phone: Yup.string().required("* Phone cannot be empty"),
+      role: Yup.string().required("* Role cannot be empty"),
+      Leader: Yup.string().required("* Leader cannot be empty"),
+      PM: Yup.string().required("* PM cannot be empty"),
     }),
     onSubmit: async (values, { resetForm }) => {
       const dataUser = {
@@ -129,9 +151,7 @@ const AddMember = ({
                 className="hover:bg-transparent active:bg-transparent focus-within:bg-transparent placeholder:text-secondary bg-transparent border border-border text-s text-white rounded-lg p-2 placeholder:text-s"
               />
               {formik.touched.name && formik.errors.name ? (
-                <div className="text-red-500 text-s ">
-                  *{formik.errors.name}
-                </div>
+                <div className="text-red-500 text-s ">{formik.errors.name}</div>
               ) : null}
             </div>
             <div className="flex flex-col flex-1 text-white">
@@ -155,7 +175,7 @@ const AddMember = ({
               />
               {formik.touched.password && formik.errors.password ? (
                 <div className="text-red-500 text-s ">
-                  *{formik.errors.password}
+                  {formik.errors.password}
                 </div>
               ) : null}
             </div>
@@ -173,7 +193,7 @@ const AddMember = ({
               className="hover:bg-transparent active:bg-transparent focus-within:bg-transparent placeholder:text-secondary bg-transparent border border-border text-s text-white rounded-lg p-2 placeholder:text-s"
             />
             {formik.touched.email && formik.errors.email ? (
-              <div className="text-red-500 text-s ">*{formik.errors.email}</div>
+              <div className="text-red-500 text-s ">{formik.errors.email}</div>
             ) : null}
           </div>
           <div className="flex flex-col mt-4">
@@ -189,7 +209,7 @@ const AddMember = ({
               className="hover:bg-transparent active:bg-transparent focus-within:bg-transparent placeholder:text-secondary bg-transparent border border-border text-s text-white rounded-lg p-2 placeholder:text-s"
             />
             {formik.touched.phone && formik.errors.phone ? (
-              <div className="text-red-500 text-s ">*{formik.errors.phone}</div>
+              <div className="text-red-500 text-s ">{formik.errors.phone}</div>
             ) : null}
           </div>
           <div className="flex items-start justify-between gap-4 mt-4">
@@ -215,9 +235,7 @@ const AddMember = ({
                 ]}
               />
               {formik.touched.role && formik.errors.role ? (
-                <div className="text-red-500 text-s ">
-                  *{formik.errors.role}
-                </div>
+                <div className="text-red-500 text-s ">{formik.errors.role}</div>
               ) : null}
             </div>
             <div className="flex-1 flex flex-col">
@@ -230,9 +248,43 @@ const AddMember = ({
               </div>
             </div>
           </div>
+          {formik.values.role == "Member" && (
+            <div className="flex-1 flex flex-col mt-4">
+              <span className="text-[12px] text-secondary">Leader:</span>
+              <Select
+                defaultValue="leader"
+                className="w-full"
+                onChange={(value) => formik.setFieldValue("leader", value)}
+                options={leaders}
+              />
+              {formik.touched.leader && formik.errors.leader ? (
+                <div className="text-red-500 text-s ">
+                  {formik.errors.leader}
+                </div>
+              ) : null}
+            </div>
+          )}
+          {formik.values.role == "Lead" && (
+            <div className="flex-1 flex flex-col mt-4">
+              <span className="text-[12px] text-secondary">PM:</span>
+              <Select
+                defaultValue="pm"
+                className="w-full"
+                onChange={(value) => formik.setFieldValue("PM", value)}
+                options={PMs}
+              />
+              {formik.touched.PM && formik.errors.PM ? (
+                <div className="text-red-500 text-s ">{formik.errors.PM}</div>
+              ) : null}
+            </div>
+          )}
           <div className="flex items-center justify-between gap-4 mt-8">
             <button
               type="button"
+              onClick={() => {
+                setIsModalCreate(false);
+                formik.resetForm();
+              }}
               className="flex-1 flex items-center justify-center border cursor-pointer border-border rounded-md py-1 bg-white bg-opacity-5 hover:bg-opacity-10 text-white"
             >
               Cancel

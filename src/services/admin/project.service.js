@@ -28,7 +28,6 @@ export const getAllProjects = createAsyncThunk(
 export const getOneProject = createAsyncThunk(
   "project/get-one-project",
   async (id) => {
-    console.log("🚀 ~ id:", id);
     try {
       const response = await BaseUrl.get(`project/one-project/${id}`);
       return response.data;

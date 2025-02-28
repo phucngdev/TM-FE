@@ -7,7 +7,7 @@ import {
   SwapOutlined,
   UndoOutlined,
 } from "@ant-design/icons";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, useSensor, useSensors } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -17,9 +17,14 @@ import Task from "../../../components/admin/projects/tasks/Task";
 import { Input, message, Result, Skeleton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAllTasks } from "../../../services/admin/task.service";
+import {
+  getAllTasks,
+  swapTaskStatus,
+  swapTaskStatusLocal,
+} from "../../../services/admin/task.service";
 import CreateTask from "../../../components/admin/projects/tasks/CreateTask";
 import TaskDetail from "../../../components/admin/projects/tasks/TaskDetail";
+import Loading from "../../../components/shared/animation/Loading";
 
 const Tasks = () => {
   const dispatch = useDispatch();
@@ -31,6 +36,7 @@ const Tasks = () => {
   const [isModalTask, setIsModalTask] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [spin, setSpin] = useState(false);
 
   const handleOpenModalTask = (task) => {
     setSelectedTask(task);
@@ -66,9 +72,56 @@ const Tasks = () => {
     setActiveId(event.active.id);
   };
 
-  const handleDragEnd = (event) => {
-    setActiveId(null);
+  // const handleDragEnd = async (event) => {
+  //   try {
+  //     setSpin(true);
+  //     const { id: activeId, data: activeData } = event.active;
+  //     const { id: overId, data: overData } = event.over;
+
+  //     if (activeId === overId || !activeId || !overId) return;
+
+  //     await dispatch(swapTaskStatus({ activeId, overId }));
+  //   } catch (error) {
+  //     message.error(error.message);
+  //   } finally {
+  //     setSpin(false);
+  //   }
+  // };
+
+  const handleDragEnd = async (event) => {
+    try {
+      setSpin(true);
+      const { id: activeId, data: activeData } = event.active;
+      const { id: overId, data: overData } = event.over;
+      const activeIndex = activeData.current.status_index;
+      const overIndex = overData.current.status_index;
+      const status = activeData.current.status;
+      if (!activeId || !overId || activeId === overId) return;
+
+      dispatch(
+        swapTaskStatusLocal({
+          activeId,
+          overId,
+          activeIndex,
+          overIndex,
+          status,
+        })
+      );
+      const response = await dispatch(swapTaskStatus({ activeId, overId }));
+      if (response.payload.status !== 200) throw new Error("Swap failed!");
+    } catch (error) {
+      message.error(error.message);
+      fetchData();
+    } finally {
+      setSpin(false);
+    }
   };
+
+  // const sensors = useSensors(
+  //   useSensor(PointerSensor, {
+  //     activationConstraint: { distance: 5 },
+  //   })
+  // );
 
   const handleOpenModal = (status) => {
     setIsModalCreate(true);
@@ -77,6 +130,7 @@ const Tasks = () => {
 
   return (
     <>
+      {spin && <Loading />}
       <CreateTask
         isModalCreate={isModalCreate}
         setIsModalCreate={setIsModalCreate}

@@ -19,7 +19,6 @@ import { formatDate } from "../../../utils/formatJoinDate";
 const ManagerTeam = () => {
   const navigate = useNavigate();
   const [isModalCreate, setIsModalCreate] = useState(false);
-  const [teamList, setTeamList] = useState([]);
   const dispatch = useDispatch();
 
   const fetchData = async () => {
@@ -34,13 +33,8 @@ const ManagerTeam = () => {
     fetchData();
   }, []);
 
-  const data = useSelector((state) => state.teams.data);
-
-  useEffect(() => {
-    if (data) {
-      setTeamList(data);
-    }
-  }, [data]);
+  const teams = useSelector((state) => state.teams.data);
+  console.log("🚀 ~ ManagerTeam ~ teams:", teams);
 
   return (
     <>
@@ -76,7 +70,7 @@ const ManagerTeam = () => {
           </div>
         </div>
         <table className="w-full mt-5 border border-separate border-border border-spacing-y-5 px-2">
-          {teamList.length > 0 && (
+          {teams.length > 0 && (
             <thead className="text-white text-[12px] font-jetbrains text-left">
               <tr>
                 <th>Team Name</th>
@@ -91,9 +85,9 @@ const ManagerTeam = () => {
             </thead>
           )}
           <tbody className="text-[12px] text-secondary">
-            {teamList.length > 0 ? (
+            {teams.length > 0 ? (
               <>
-                {teamList?.map((team) => (
+                {teams?.map((team) => (
                   <tr
                     key={team._id}
                     className="hover:bg-white hover:bg-opacity-10 rounded-lg cursor-pointer active:bg-opacity-20"

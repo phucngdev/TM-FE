@@ -33,3 +33,24 @@ export const createTask = createAsyncThunk(
     }
   }
 );
+
+export const swapTaskStatus = createAsyncThunk(
+  "task/post-swap-task",
+  async ({ activeId, overId }) => {
+    try {
+      const response = await BaseUrl.post(
+        `task/swap-task/${activeId}/${overId}`
+      );
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const swapTaskStatusLocal = createAsyncThunk(
+  "tasks/swapTaskStatusLocal",
+  async ({ activeId, overId, activeIndex, overIndex, status }) => {
+    return { activeId, overId, activeIndex, overIndex, status };
+  }
+);

@@ -21,6 +21,7 @@ const Dashboard = lazy(() => import("./screens/admin/Dashboard"));
 const Projects = lazy(() => import("./screens/admin/projects/Projects"));
 import ManagerPersonnel from "./screens/admin/personnel/ManagerPersonnel";
 import Register from "./screens/user/Register";
+import OrganizationChart from "./screens/admin/personnel/OrganizationChart";
 
 function App() {
   return (
@@ -38,7 +39,10 @@ function App() {
             <Route path="teams/" element={<ManagerTeam />} />
             <Route path="personnel/" element={<Personnel />}>
               <Route path="manager-personnel" element={<ManagerPersonnel />} />
-              {/* <Route path="organization-chart" element={<Members />} /> */}
+              <Route
+                path="organization-chart"
+                element={<OrganizationChart />}
+              />
             </Route>
             <Route path="teams/:id/" element={<Teams />}>
               <Route path="members" element={<Members />} />

@@ -83,27 +83,25 @@ const LeftSide = () => {
             </div>
           </div>
           {project.members.map((member) => (
-            <>
-              <div className="flex flex-col gap-1 my-2">
-                <div
-                  key={member._id}
-                  className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}
-                >
-                  <div className="flex items-center gap-1">
-                    <Avatar className="bg-[#fde3cf] text-[#f56a00]">
-                      {member.name[0]}
-                    </Avatar>
-                    <div className="">
-                      <p className="text-[12px]">{member.name}</p>
-                      <p className="text-s">{member.role}</p>
-                    </div>
-                  </div>
+            <div key={member._id} className="flex flex-col gap-1 my-2">
+              <div
+                key={member._id}
+                className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}
+              >
+                <div className="flex items-center gap-1">
+                  <Avatar className="bg-[#fde3cf] text-[#f56a00]">
+                    {member.name[0]}
+                  </Avatar>
                   <div className="">
-                    <DownOutlined />
+                    <p className="text-[12px]">{member.name}</p>
+                    <p className="text-s">{member.role}</p>
                   </div>
                 </div>
+                <div className="">
+                  <DownOutlined />
+                </div>
               </div>
-            </>
+            </div>
           ))}
 
           <h3 className="text-base text-white font-jetbrains mb-4 mt-5">

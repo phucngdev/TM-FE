@@ -409,7 +409,10 @@ const CreateProject = () => {
                         </div>
                         <div className="flex-1 flex flex-col gap-1">
                           {d.docs.map((ds, indexDocs) => (
-                            <div className="flex items-center justify-between gap-2">
+                            <div
+                              key={indexDocs}
+                              className="flex items-center justify-between gap-2"
+                            >
                               <Input
                                 key={indexDocs}
                                 value={d.docs[indexDocs]}

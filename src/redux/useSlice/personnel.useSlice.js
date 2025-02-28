@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createPersonnel,
   getAllPersonnel,
+  getAllPersonnelChart,
 } from "../../services/admin/personnel.service";
 
 const personnelSlice = createSlice({
@@ -24,6 +25,17 @@ const personnelSlice = createSlice({
         state.status = "Failed!";
         state.error = action.error.message;
       })
+      // .addCase(getAllPersonnelChart.pending, (state) => {
+      //   state.status = "Pending!";
+      // })
+      // .addCase(getAllPersonnelChart.fulfilled, (state, action) => {
+      //   state.status = "Successfully!";
+      //   state.dataChart = action.payload.dataChart;
+      // })
+      // .addCase(getAllPersonnelChart.rejected, (state, action) => {
+      //   state.status = "Failed!";
+      //   state.error = action.error.message;
+      // })
       .addCase(createPersonnel.pending, (state) => {
         state.status = "Pending!";
       })

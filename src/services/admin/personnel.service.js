@@ -24,3 +24,15 @@ export const getAllPersonnel = createAsyncThunk(
     }
   }
 );
+
+export const getAllPersonnelChart = createAsyncThunk(
+  "user/get-all-personnel-chart",
+  async () => {
+    try {
+      const response = await BaseUrl.get(`user/personnels-chart`);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);

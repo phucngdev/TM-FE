@@ -109,6 +109,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
       resetForm();
       setDisabled(false);
       setLoading(false);
+      setTaskCase([""]);
     },
   });
 

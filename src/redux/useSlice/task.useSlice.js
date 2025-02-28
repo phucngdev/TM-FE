@@ -3,6 +3,8 @@ import {
   createTask,
   getAllTasks,
   getOneTask,
+  swapTaskStatus,
+  swapTaskStatusLocal,
 } from "../../services/admin/task.service";
 
 const statusOption = ["todo", "in_progress", "review", "done"];
@@ -40,6 +42,33 @@ const taskSlice = createSlice({
         state.data[action.payload.newTask.status].push(action.payload.newTask);
       })
       .addCase(createTask.rejected, (state, action) => {
+        state.status = "Failed!";
+        state.error = action.error.message;
+      })
+      .addCase(swapTaskStatusLocal.pending, (state) => {
+        state.status = "Pending!";
+      })
+      .addCase(swapTaskStatusLocal.fulfilled, (state, action) => {
+        state.status = "Successfully!";
+        const { activeId, overId, activeIndex, overIndex, status } =
+          action.payload;
+
+        const tasks = state.data[status];
+        if (!tasks) return;
+
+        const task1Index = tasks.findIndex((task) => task._id === activeId);
+        const task2Index = tasks.findIndex((task) => task._id === overId);
+        if (task1Index === -1 || task2Index === -1) return;
+
+        [tasks[task1Index], tasks[task2Index]] = [
+          tasks[task2Index],
+          tasks[task1Index],
+        ];
+
+        tasks[task1Index].status_index = activeIndex;
+        tasks[task2Index].status_index = overIndex;
+      })
+      .addCase(swapTaskStatusLocal.rejected, (state, action) => {
         state.status = "Failed!";
         state.error = action.error.message;
       })

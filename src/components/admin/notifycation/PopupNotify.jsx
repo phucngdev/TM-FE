@@ -50,8 +50,11 @@ const PopupNotify = ({ popupNotify, setPopupNotify }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2 mt-5">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(() => (
-            <div className="group max-h-20 overflow-hidden text-xs text-ellipsis text-secondary cursor-pointer flex items-center justify-between p-2 rounded-md hover:bg-white hover:bg-opacity-15">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((n) => (
+            <div
+              key={n}
+              className="group max-h-20 overflow-hidden text-xs text-ellipsis text-secondary cursor-pointer flex items-center justify-between p-2 rounded-md hover:bg-white hover:bg-opacity-15"
+            >
               <div className="max-w-[90%]">
                 <p className="">
                   <span className="text-sm text-white">Title here: </span>
