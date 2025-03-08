@@ -39,12 +39,15 @@ const AddMember = ({
   }, [personnel, oldMember, newPersonnel]);
 
   const leaders = useMemo(() => {
-    return personnel
-      ?.filter((member) => member.role === "Lead")
-      ?.map((member) => ({
-        label: member.name,
-        value: member._id,
-      }));
+    return (
+      personnel &&
+      personnel
+        ?.filter((member) => member.role === "Lead")
+        ?.map((member) => ({
+          label: member.name,
+          value: member._id,
+        }))
+    );
   }, [personnel]);
 
   const PMs = useMemo(() => {

@@ -8,26 +8,27 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Badge, Input } from "antd";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PopupChat from "../../components/admin/message/PopupChat";
 import PopupChatItem from "../../components/admin/message/PopupChatItem";
 import PopupNotify from "../../components/admin/notifycation/PopupNotify";
 import DrawerProfile from "../../components/admin/profile/Drawer";
+import { togglePopupChat } from "../../redux/useSlice/popupchat.useSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
-  const [popupChat, setPopupChat] = useState(false);
-  const [popupNotify, setPopupNotify] = useState(false);
+  const isPopupChatOpen = useSelector(
+    (state) => state.popupchat.isPopupChatOpen
+  );
   const [openDrawer, setOpenDrawer] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const handleClickPopupChat = () => {
-    setPopupChat((prev) => !prev);
+    dispatch(togglePopupChat());
   };
 
-  const handleClickPopupNotify = () => {
-    setPopupNotify((prev) => !prev);
-  };
+  const handleClickPopupNotify = () => {};
 
   const showLoading = () => {
     setOpenDrawer(true);
@@ -40,8 +41,13 @@ const Header = () => {
 
   return (
     <>
-      <PopupChat popupChat={popupChat} setPopupChat={setPopupChat} />
-      <PopupNotify popupNotify={popupNotify} setPopupNotify={setPopupNotify} />
+      {isPopupChatOpen && <PopupChat />}
+      {/* {popupNotify && (
+        <PopupNotify
+          popupNotify={popupNotify}
+          setPopupNotify={setPopupNotify}
+        />
+      )} */}
       <DrawerProfile
         openDrawer={openDrawer}
         setOpenDrawer={setOpenDrawer}

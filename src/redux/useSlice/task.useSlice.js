@@ -12,7 +12,7 @@ const statusOption = ["todo", "in_progress", "review", "done"];
 const taskSlice = createSlice({
   name: "tasks",
   initialState: {
-    data: [],
+    data: {},
     totalTasks: 0,
     donePercent: 0,
     dataEdit: null,
@@ -50,24 +50,49 @@ const taskSlice = createSlice({
       })
       .addCase(swapTaskStatusLocal.fulfilled, (state, action) => {
         state.status = "Successfully!";
-        const { activeId, overId, activeIndex, overIndex, status } =
+        const { activeId, activeIndex, overIndex, activeStatus, overStatus } =
           action.payload;
 
-        const tasks = state.data[status];
-        if (!tasks) return;
+        // Kiểm tra nếu danh sách không tồn tại
+        if (!state.data[activeStatus] || !state.data[overStatus]) {
+          console.log("Lỗi: Không tìm thấy danh sách");
+          return;
+        }
 
-        const task1Index = tasks.findIndex((task) => task._id === activeId);
-        const task2Index = tasks.findIndex((task) => task._id === overId);
-        if (task1Index === -1 || task2Index === -1) return;
+        // Tìm task đang di chuyển
+        const activeTask = state.data[activeStatus].find(
+          (task) => task._id === activeId
+        );
+        if (!activeTask) return;
 
-        [tasks[task1Index], tasks[task2Index]] = [
-          tasks[task2Index],
-          tasks[task1Index],
-        ];
+        // 🟢 Nếu kéo trong cùng một danh sách (status không đổi)
+        if (activeStatus === overStatus) {
+          const list = state.data[activeStatus];
 
-        tasks[task1Index].status_index = activeIndex;
-        tasks[task2Index].status_index = overIndex;
+          // Xoá task khỏi vị trí cũ
+          list.splice(activeIndex, 1);
+          // Chèn task vào vị trí mới
+          list.splice(overIndex, 0, activeTask);
+        }
+        // 🔴 Nếu kéo sang danh sách khác (status thay đổi)
+        else {
+          // Xóa task khỏi danh sách cũ
+          state.data[activeStatus] = state.data[activeStatus].filter(
+            (task) => task._id !== activeId
+          );
+
+          // Cập nhật trạng thái mới cho task
+          activeTask.status = overStatus;
+
+          // Đảm bảo không bị thêm trùng
+          if (
+            !state.data[overStatus].some((task) => task._id === activeTask._id)
+          ) {
+            state.data[overStatus].splice(overIndex, 0, activeTask); // Thêm vào danh sách mới
+          }
+        }
       })
+
       .addCase(swapTaskStatusLocal.rejected, (state, action) => {
         state.status = "Failed!";
         state.error = action.error.message;

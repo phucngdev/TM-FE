@@ -7,7 +7,15 @@ import {
   SwapOutlined,
   UndoOutlined,
 } from "@ant-design/icons";
-import { DndContext, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  defaultDropAnimationSideEffects,
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useDroppable,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -26,11 +34,24 @@ import CreateTask from "../../../components/admin/projects/tasks/CreateTask";
 import TaskDetail from "../../../components/admin/projects/tasks/TaskDetail";
 import Loading from "../../../components/shared/animation/Loading";
 
+const STATUS_LIST = ["todo", "in_progress", "review", "done"];
+
+const Column = ({ status, children }) => {
+  const { setNodeRef } = useDroppable({ id: status });
+
+  return (
+    <div ref={setNodeRef} className="flex flex-col gap-3">
+      {children}
+    </div>
+  );
+};
+
 const Tasks = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const [activeId, setActiveId] = useState(null);
+  const [activeData, setActiveData] = useState(null);
   const [status, setStatus] = useState(null);
   const [isModalCreate, setIsModalCreate] = useState(false);
   const [isModalTask, setIsModalTask] = useState(false);
@@ -62,6 +83,16 @@ const Tasks = () => {
 
   const tasks = useSelector((state) => state.tasks.data);
 
+  const itemSortTable = useMemo(() => {
+    let items = [];
+    if (tasks) {
+      STATUS_LIST.forEach((status) => {
+        items.push(...(tasks[status]?.map((task) => task._id) || []));
+      });
+    }
+    return items;
+  }, [tasks]);
+
   const isAllTasksEmpty = useMemo(() => {
     return Object.values(tasks).every(
       (arr) => Array.isArray(arr) && arr.length === 0
@@ -69,59 +100,62 @@ const Tasks = () => {
   }, [tasks]);
 
   const handleDragStart = (event) => {
+    setActiveData(event.active.data.current);
     setActiveId(event.active.id);
   };
 
-  // const handleDragEnd = async (event) => {
-  //   try {
-  //     setSpin(true);
-  //     const { id: activeId, data: activeData } = event.active;
-  //     const { id: overId, data: overData } = event.over;
-
-  //     if (activeId === overId || !activeId || !overId) return;
-
-  //     await dispatch(swapTaskStatus({ activeId, overId }));
-  //   } catch (error) {
-  //     message.error(error.message);
-  //   } finally {
-  //     setSpin(false);
-  //   }
-  // };
+  const handleDragOver = (event) => {
+    console.log("🚀 ~ handleDragOver ~ event:", event);
+    // event.preventDefault();
+  };
 
   const handleDragEnd = async (event) => {
     try {
       setSpin(true);
       const { id: activeId, data: activeData } = event.active;
       const { id: overId, data: overData } = event.over;
-      const activeIndex = activeData.current.status_index;
-      const overIndex = overData.current.status_index;
-      const status = activeData.current.status;
-      if (!activeId || !overId || activeId === overId) return;
+      const overIndex = overData.current.order;
+      const activeIndex = activeData.current.order;
+      const activeStatus = activeData.current.status;
+      const overStatus = overData.current.status;
 
-      dispatch(
-        swapTaskStatusLocal({
-          activeId,
-          overId,
-          activeIndex,
-          overIndex,
-          status,
-        })
+      if (!activeId || !overId) return;
+
+      // dispatch(
+      //   swapTaskStatusLocal({
+      //     activeId,
+      //     overId,
+      //     activeIndex,
+      //     overIndex,
+      //     activeStatus,
+      //     overStatus,
+      //   })
+      // );
+      const response = await dispatch(
+        swapTaskStatus({ activeId, overIndex, activeStatus, overStatus })
       );
-      const response = await dispatch(swapTaskStatus({ activeId, overId }));
       if (response.payload.status !== 200) throw new Error("Swap failed!");
     } catch (error) {
       message.error(error.message);
-      fetchData();
     } finally {
+      fetchData();
       setSpin(false);
+      setActiveData(null);
+      setActiveId(null);
     }
   };
 
-  // const sensors = useSensors(
-  //   useSensor(PointerSensor, {
-  //     activationConstraint: { distance: 5 },
-  //   })
-  // );
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 5 },
+    })
+  );
+
+  const dropAnimation = {
+    sideEffects: defaultDropAnimationSideEffects({
+      styles: { active: { opacity: "0.5" } },
+    }),
+  };
 
   const handleOpenModal = (status) => {
     setIsModalCreate(true);
@@ -226,7 +260,7 @@ const Tasks = () => {
           />
         </div>
       )}
-      <DndContext onDragEnd={handleDragEnd}>
+      {/* <DndContext onDragEnd={handleDragEnd}>
         <div className="grid grid-cols-4 gap-4">
           {Object.entries(tasks).map(([status, taskList]) => (
             <SortableContext
@@ -243,6 +277,37 @@ const Tasks = () => {
                   />
                 ))}
               </div>
+            </SortableContext>
+          ))}
+        </div>
+      </DndContext> */}
+      <DndContext
+        onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
+        onDragStart={handleDragStart}
+        sensors={sensors}
+      >
+        <div className="grid grid-cols-4 gap-4">
+          {STATUS_LIST.map((status) => (
+            <SortableContext
+              key={status}
+              items={itemSortTable}
+              strategy={verticalListSortingStrategy}
+            >
+              <Column status={status}>
+                {tasks[status]?.map((task) => (
+                  <Task
+                    key={task._id}
+                    task={task}
+                    onOpenModal={handleOpenModalTask}
+                  />
+                ))}
+              </Column>
+              <DragOverlay dropAnimation={dropAnimation}>
+                {activeId ? (
+                  <Task task={activeData} onOpenModal={handleOpenModalTask} />
+                ) : null}
+              </DragOverlay>
             </SortableContext>
           ))}
         </div>

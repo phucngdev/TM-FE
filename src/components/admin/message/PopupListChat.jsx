@@ -1,11 +1,13 @@
 import React from "react";
 import PopupChatItem from "./PopupChatItem";
+import { useDispatch, useSelector } from "react-redux";
+import { resize } from "../../../redux/useSlice/popupchat.useSlice";
 
-const PopupListChat = ({ listChat, setListChat }) => {
+const PopupListChat = () => {
+  const dispatch = useDispatch();
+  const listChat = useSelector((state) => state.popupchat.listChat);
   const handleResize = (chatId, isMinimized) => {
-    setListChat((prev) =>
-      prev.map((c) => (c.chat._id === chatId ? { ...c, isMinimized } : c))
-    );
+    dispatch(resize({ chatId, isMinimized }));
   };
 
   return (
@@ -14,12 +16,12 @@ const PopupListChat = ({ listChat, setListChat }) => {
       <div className="fixed z-[99] right-24 bottom-[30px] flex flex-row gap-5">
         {listChat
           .filter((c) => !c.isMinimized)
-          .map((c) => (
+          .map((c, index) => (
             <PopupChatItem
-              key={c.chat._id}
-              chat={c.chat}
+              key={c.room._id}
+              room={c.room}
+              index={index}
               isMinimized={c.isMinimized}
-              setListChat={setListChat}
               onResize={handleResize}
             />
           ))}
@@ -31,10 +33,10 @@ const PopupListChat = ({ listChat, setListChat }) => {
           .filter((c) => c.isMinimized)
           .map((c) => (
             <PopupChatItem
-              key={c.chat._id}
-              chat={c.chat}
+              key={c.room._id}
+              room={c.room}
+              index={index}
               isMinimized={c.isMinimized}
-              setListChat={setListChat}
               onResize={handleResize}
             />
           ))}

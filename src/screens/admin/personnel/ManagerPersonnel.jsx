@@ -3,6 +3,7 @@ import {
   ClusterOutlined,
   DownOutlined,
   MailOutlined,
+  MessageOutlined,
   MobileOutlined,
   SearchOutlined,
   SolutionOutlined,
@@ -11,19 +12,52 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Dropdown, Input } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formatJoinDate } from "../../../utils/formatJoinDate";
+import {
+  addChat,
+  openPopupChat,
+} from "../../../redux/useSlice/popupchat.useSlice";
+import {
+  createRoom,
+  handleCheckRoom,
+} from "../../../services/admin/room.service";
 
 const ManagerPersonnel = () => {
+  const dispatch = useDispatch();
   const [personnels, setPersonnels] = useState([]);
   const data = useSelector((state) => state.personnel.data);
+  const user = useSelector((state) => state.user.data);
+  const listChat = useSelector((state) => state.popupchat.listChat);
 
   useEffect(() => {
     if (data.length > 0) {
       setPersonnels(data);
     }
   }, [data]);
+
+  const handleClickChat = async (userData) => {
+    // Tìm phòng chat đã tồn tại giữa hai người
+    const existingChat = await dispatch(handleCheckRoom(userData._id));
+
+    if (existingChat?.payload?.status === 200) {
+      // Nếu đã có phòng chat, chỉ cần mở lại
+      dispatch(addChat(existingChat.payload.room));
+    } else {
+      // Nếu chưa có phòng, tạo mới
+      const newRoom = await dispatch(
+        createRoom({
+          members: [user._id, userData._id],
+          type: "private",
+        })
+      );
+
+      if (newRoom) {
+        dispatch(addChat(newRoom));
+      }
+    }
+  };
 
   return (
     <>
@@ -80,7 +114,10 @@ const ManagerPersonnel = () => {
         </div>
         <div className="grid grid-cols-5 gap-3">
           {personnels.map((p) => (
-            <div key={p._id} className="p-3 rounded-md bg-white bg-opacity-10">
+            <div
+              key={p._id}
+              className="group relative p-3 rounded-md bg-white bg-opacity-10 cursor-pointer"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Avatar className="bg-[#fde3cf] text-[#f56a00] cursor-pointer">
@@ -88,8 +125,14 @@ const ManagerPersonnel = () => {
                   </Avatar>
                   <div className="text-[12px] text-white">{p.name}</div>
                 </div>
-                <div className="p-1 rounded-full text-[10px] text-white bg-green-600">
+                <div className="group-hover:hidden p-1 rounded-full text-[10px] text-white bg-green-600">
                   active
+                </div>
+                <div
+                  onClick={() => handleClickChat(p)}
+                  className="group-hover:block hidden py-1 px-3 text-white bg-white bg-opacity-20 hover:bg-opacity-15 active:bg-opacity-20 rounded-md"
+                >
+                  <MessageOutlined />
                 </div>
               </div>
               <div className="flex flex-col gap-2 mt-2 rounded-md bg-white bg-opacity-10 p-2 text-[11px] text-secondary">

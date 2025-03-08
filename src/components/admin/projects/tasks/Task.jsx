@@ -21,7 +21,7 @@ const Task = ({ onOpenModal, task }) => {
   } = useSortable({
     id: task._id,
     data: { ...task },
-    onPointerDownCapture: (event) => event.preventDefault(),
+    // onPointerDownCapture: (event) => event.preventDefault(),
   });
 
   const dndkitStyle = {
@@ -41,7 +41,7 @@ const Task = ({ onOpenModal, task }) => {
             e.stopPropagation();
             onOpenModal(task);
           }}
-          className="relative p-2 max-h-40 min-h-40 rounded-lg flex flex-col justify-between bg-white bg-opacity-10 cursor-pointer hover:bg-opacity-20 hover:rotate-3 transition duration-150"
+          className="relative p-2 max-h-40 min-h-40 rounded-lg flex flex-col justify-between bg-white bg-opacity-10 !opacity-100 cursor-pointer hover:bg-opacity-20"
         >
           <div
             {...listeners}

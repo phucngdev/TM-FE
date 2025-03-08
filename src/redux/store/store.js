@@ -6,6 +6,8 @@ import teamsSlice from "../useSlice/teams.useSlice";
 import projectSlice from "../useSlice/project.useSlice";
 import tagSlice from "../useSlice/tag.useSlice";
 import taskSlice from "../useSlice/task.useSlice";
+import roomSlice from "../useSlice/room.useSlice";
+import popupchatSlice from "../useSlice/popupchat.useSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ const store = configureStore({
     project: projectSlice,
     tags: tagSlice,
     tasks: taskSlice,
+    rooms: roomSlice,
+    popupchat: popupchatSlice,
   },
 });
 
