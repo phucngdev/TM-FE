@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createTask,
+  getAllMyTasks,
   getAllTasks,
   getOneTask,
   swapTaskStatus,
@@ -16,6 +17,7 @@ const taskSlice = createSlice({
     totalTasks: 0,
     donePercent: 0,
     dataEdit: null,
+    myTask: null,
     status: "idle",
     error: null,
   },
@@ -31,6 +33,17 @@ const taskSlice = createSlice({
         state.donePercent = action.payload.donePercent;
       })
       .addCase(getAllTasks.rejected, (state, action) => {
+        state.status = "Failed!";
+        state.error = action.error.message;
+      })
+      .addCase(getAllMyTasks.pending, (state) => {
+        state.status = "Pending!";
+      })
+      .addCase(getAllMyTasks.fulfilled, (state, action) => {
+        state.status = "Successfully!";
+        state.myTask = action.payload.myTask;
+      })
+      .addCase(getAllMyTasks.rejected, (state, action) => {
         state.status = "Failed!";
         state.error = action.error.message;
       })

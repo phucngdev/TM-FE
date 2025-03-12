@@ -41,7 +41,7 @@ const ManagerPersonnel = () => {
     // Tìm phòng chat đã tồn tại giữa hai người
     const existingChat = await dispatch(handleCheckRoom(userData._id));
 
-    if (existingChat?.payload?.status === 200) {
+    if (existingChat.payload.status === 200) {
       // Nếu đã có phòng chat, chỉ cần mở lại
       dispatch(addChat(existingChat.payload.room));
     } else {
@@ -54,7 +54,7 @@ const ManagerPersonnel = () => {
       );
 
       if (newRoom) {
-        dispatch(addChat(newRoom));
+        dispatch(addChat(newRoom.payload.newRoom));
       }
     }
   };
@@ -72,7 +72,7 @@ const ManagerPersonnel = () => {
               className="w-52 bg-transparent hover:bg-transparent active:bg-transparent text-white focus-within:bg-transparent placeholder:text-secondary border-border"
               prefix={<SearchOutlined className="text-secondary" />}
             />
-            <div className="flex items-center gap-2 text-[12px] text-secondary cursor-pointer bg-white bg-opacity-10 rounded-md px-2 py-1">
+            <div className="flex items-center gap-2 text-[12px] text-color cursor-pointer bg-white bg-opacity-10 rounded-md px-2 py-1">
               <UngroupOutlined />
               Type
               <Dropdown
@@ -89,7 +89,7 @@ const ManagerPersonnel = () => {
                 <DownOutlined className="text-[12px] p-1 bg-white bg-opacity-10 rounded-md" />
               </Dropdown>
             </div>
-            <div className="flex items-center gap-2 text-[12px] text-secondary cursor-pointer bg-white bg-opacity-10 rounded-md px-2 py-1">
+            <div className="flex items-center gap-2 text-[12px] text-color cursor-pointer bg-white bg-opacity-10 rounded-md px-2 py-1">
               <ClusterOutlined />
               Role
               <Dropdown
@@ -107,7 +107,7 @@ const ManagerPersonnel = () => {
                 <DownOutlined className="text-[12px] p-1 bg-white bg-opacity-10 rounded-md" />
               </Dropdown>
             </div>
-            <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
+            <div className="flex items-center gap-1 text-[12px] text-color cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
               <UndoOutlined /> Recent
             </div>
           </div>
@@ -135,7 +135,7 @@ const ManagerPersonnel = () => {
                   <MessageOutlined />
                 </div>
               </div>
-              <div className="flex flex-col gap-2 mt-2 rounded-md bg-white bg-opacity-10 p-2 text-[11px] text-secondary">
+              <div className="flex flex-col gap-2 mt-2 rounded-md bg-white bg-opacity-10 p-2 text-[11px] text-color">
                 <div className="flex items-center gap-2">
                   <BorderlessTableOutlined /> {p.role}
                 </div>
@@ -146,7 +146,7 @@ const ManagerPersonnel = () => {
                   <MailOutlined /> {p.email}
                 </div>
               </div>
-              <div className="flex items-center justify-between mt-4 text-secondary text-[11px]">
+              <div className="flex items-center justify-between mt-4 text-color text-[11px]">
                 <span>{formatJoinDate(p.createdAt)}</span>
                 <Link to="" className="border-b border-secondary">
                   View details

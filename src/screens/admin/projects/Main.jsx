@@ -59,14 +59,14 @@ const Main = () => {
         <div className="flex items-center justify-between mt-3">
           <Input
             placeholder="Search tasks"
-            className="w-2/5 bg-transparent hover:bg-transparent active:bg-transparent text-white focus-within:bg-transparent placeholder:text-secondary border-border"
+            className="w-2/5 bg-transparent hover:bg-transparent active:bg-transparent text-white focus-within:bg-transparent placeholder:text-color border-border"
             prefix={<SearchOutlined className="text-secondary" />}
           />
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
+            <div className="flex items-center gap-1 text-[12px] text-color cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
               <UndoOutlined /> Recent
             </div>
-            <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
+            <div className="flex items-center gap-1 text-[12px] text-color cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
               <SwapOutlined /> All filters
             </div>
           </div>
@@ -85,7 +85,7 @@ const Main = () => {
               </tr>
             </thead>
           )}
-          <tbody className="text-[12px] text-secondary">
+          <tbody className="text-[12px] text-color">
             {loading ? (
               <>
                 <tr>

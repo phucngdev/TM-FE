@@ -15,6 +15,7 @@ import {
   DeleteOutlined,
   HolderOutlined,
   PlusOutlined,
+  SendOutlined,
 } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
@@ -47,6 +48,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
   const taskDetail = useSelector((state) => state.tasks.dataEdit);
   const personnel = useSelector((state) => state.personnel.data);
   const tags = useSelector((state) => state.tags.data);
+  const user = useSelector((state) => state.user.data);
 
   const members = useMemo(() => {
     return personnel
@@ -85,18 +87,18 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
           <>
             <div className="flex flex-col gap-4 mt-2">
               <div className="flex flex-col flex-1 mt-2">
-                <label className="text-[12px] text-secondary" htmlFor="">
+                <label className="text-[12px] text-color" htmlFor="">
                   Description:
                 </label>
                 <Skeleton.Node active className="!w-full !h-12"></Skeleton.Node>
               </div>
               <div className="flex flex-col gap-1 mt-2">
-                <span className="text-[12px] text-secondary">Deadline</span>
+                <span className="text-[12px] text-color">Deadline</span>
                 <Skeleton.Node active className="!w-full !h-12"></Skeleton.Node>
               </div>
               <div className="flex items-start gap-4 mt-2">
                 <div className="flex flex-1 flex-col gap-1">
-                  <span className="text-[12px] text-secondary">Assign to</span>
+                  <span className="text-[12px] text-color">Assign to</span>
                   <div className="flex items-center gap-1">
                     <Skeleton.Avatar active size="large" />
                     <Skeleton.Avatar active size="large" />
@@ -105,7 +107,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col gap-1">
-                  <span className="text-[12px] text-secondary">Tags</span>
+                  <span className="text-[12px] text-color">Tags</span>
                   <div className="flex items-center gap-1">
                     <Skeleton.Button active size="default" />
                     <Skeleton.Button active size="default" />
@@ -114,9 +116,9 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                 </div>
               </div>
               <div className="flex flex-col gap-1 mt-2">
-                <span className="text-[12px] text-secondary">Task Details</span>
+                <span className="text-[12px] text-color">Task Details</span>
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-3 justify-between text-secondary">
+                  <div className="flex items-center gap-3 justify-between text-color">
                     <HolderOutlined />
                     <Skeleton.Input
                       active
@@ -127,7 +129,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                       <DeleteOutlined />
                     </button>
                   </div>
-                  <div className="flex items-center gap-3 justify-between text-secondary">
+                  <div className="flex items-center gap-3 justify-between text-color">
                     <HolderOutlined />
                     <Skeleton.Input
                       active
@@ -138,7 +140,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                       <DeleteOutlined />
                     </button>
                   </div>
-                  <div className="flex items-center gap-3 justify-between text-secondary">
+                  <div className="flex items-center gap-3 justify-between text-color">
                     <HolderOutlined />
                     <Skeleton.Input
                       active
@@ -161,7 +163,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
         ) : (
           <div className="flex flex-col gap-4 mt-2">
             <div className="flex flex-col flex-1 mt-2">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Description:
               </label>
               <TextArea
@@ -173,11 +175,11 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                 readOnly
                 value={taskDetail.description}
                 placeholder="description"
-                className="hover:bg-transparent active:bg-transparent focus-within:bg-transparent placeholder:text-secondary bg-transparent border border-border text-s text-white rounded-lg p-2 placeholder:text-s"
+                className="hover:bg-transparent active:bg-transparent focus-within:bg-transparent placeholder:text-color bg-transparent border border-border text-s text-white rounded-lg p-2 placeholder:text-s"
               />
             </div>
             <div className="flex flex-col gap-1 mt-2">
-              <span className="text-[12px] text-secondary">Deadline</span>
+              <span className="text-[12px] text-color">Deadline</span>
               <RangePicker
                 placeholder={["Start date", "Due date"]}
                 defaultValue={[
@@ -189,7 +191,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
             </div>
             <div className="flex items-start gap-4 mt-2">
               <div className="flex flex-1 flex-col gap-1">
-                <span className="text-[12px] text-secondary">Assign to</span>
+                <span className="text-[12px] text-color">Assign to</span>
                 <div className="flex items-center gap-1">
                   {taskDetail.assigned_to.map((as) => (
                     <Avatar key={as._id} className="text-white bg-[#349f88]">
@@ -206,7 +208,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                 </div>
               </div>
               <div className="flex flex-1 flex-col gap-1">
-                <span className="text-[12px] text-secondary">Tags</span>
+                <span className="text-[12px] text-color">Tags</span>
                 <div className="flex items-center gap-1">
                   {taskDetail.tags.map((t) => (
                     <p
@@ -229,7 +231,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
             <div className="flex items-start gap-4 mt-2">
               {addMember && (
                 <div className="flex-1">
-                  <span className="text-[12px] text-secondary">Members</span>
+                  <span className="text-[12px] text-color">Members</span>
                   <div className="flex items-center gap-3">
                     <div className="flex flex-1 flex-col gap-3">
                       <Select
@@ -247,7 +249,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                     <button
                       type="button"
                       onClick={() => setAddMember(false)}
-                      className="text-secondary hover:text-white"
+                      className="text-color hover:text-white"
                     >
                       <DeleteOutlined />
                     </button>
@@ -256,7 +258,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
               )}
               {addTag && (
                 <div className="flex-1">
-                  <span className="text-[12px] text-secondary">Tags:</span>
+                  <span className="text-[12px] text-color">Tags:</span>
                   <div className="flex items-center gap-3">
                     <div className="flex flex-1 flex-col gap-3">
                       <Select
@@ -271,7 +273,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                     <button
                       type="button"
                       onClick={() => setAddTag(false)}
-                      className="text-secondary hover:text-white"
+                      className="text-color hover:text-white"
                     >
                       <DeleteOutlined />
                     </button>
@@ -280,12 +282,12 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
               )}
             </div>
             <div className="flex flex-col gap-1 mt-2">
-              <span className="text-[12px] text-secondary">Task Details</span>
+              <span className="text-[12px] text-color">Task Details</span>
               <div className="flex flex-col gap-2">
                 {taskDetail.task_case.map((t) => (
                   <div
                     key={t._id}
-                    className="flex items-center gap-3 justify-between text-secondary"
+                    className="flex items-center gap-3 justify-between text-color"
                   >
                     <HolderOutlined />
                     <Input
@@ -299,7 +301,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                   </div>
                 ))}
                 {taskCase.map((t, index) => (
-                  <div className="flex items-center gap-3 justify-between text-secondary">
+                  <div className="flex items-center gap-3 justify-between text-color">
                     <HolderOutlined />
                     <Input
                       placeholder="task case"
@@ -311,7 +313,7 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                           )
                         )
                       }
-                      className="bg-transparent placeholder:text-secondary text-white border-border hover:bg-transparent focus-within:bg-transparent"
+                      className="bg-transparent placeholder:text-color text-white border-border hover:bg-transparent focus-within:bg-transparent"
                     />
                     <button
                       type="button"
@@ -331,6 +333,47 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
                 </button>
               </div>
             </div>
+            <div className="flex flex-col gap-1 mt-2">
+              <span className="text-[12px] text-color">Comment</span>
+              <div className="flex flex-col gap-2">
+                {[1, 2, 3].map((t, index) => (
+                  <div className="flex items-start gap-3 justify-between text-white">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-[#349f88]">
+                      T
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-xs">Ancel Cicelia</div>
+                      <span className="text-s">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Provident est veritatis odio, laborum ipsum sequi
+                        officiis totam. Illo, nostrum ullam dolorem
+                      </span>
+                    </div>
+                    {/* <Input
+                      placeholder="comment"
+                      className="bg-transparent placeholder:text-color text-white border-border hover:bg-transparent focus-within:bg-transparent"
+                    /> */}
+                  </div>
+                ))}
+                <div className="flex items-center gap-3 justify-between text-white mt-3">
+                  <div className="flex items-center justify-center size-8 rounded-full bg-[#349f88]">
+                    T
+                  </div>
+                  <form className="flex-1 relative">
+                    <Input
+                      placeholder="comment"
+                      className="bg-transparent placeholder:text-secondary text-white border-border hover:bg-transparent focus-within:bg-transparent"
+                    />
+                    <button
+                      type="submit"
+                      className="absolute top-1/2 -translate-y-1/2 right-0 cursor-pointer p-1 rounded-md size-7 hover:bg-white hover:bg-opacity-20 flex items-center justify-center"
+                    >
+                      <SendOutlined />
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
             <div className="flex items-center justify-between gap-4 mt-8">
               <button
                 type="button"
@@ -344,16 +387,24 @@ const TaskDetail = ({ isModalTask, setIsModalTask, taskId }) => {
               >
                 Save
               </button>
+            </div>
+            {taskDetail.status === "review" && (
               <button
-                type="submit"
+                type="button"
                 className="flex-1 flex items-center justify-center border cursor-pointer border-border rounded-md py-1 bg-primary hover:bg-red-500 active:bg-red-600 text-white"
               >
-                {taskDetail.status == "todo" && "Accept"}
-                {taskDetail.status == "in_progress" && "Review"}
-                {taskDetail.status == "review" && "Done"}
-                {taskDetail.status == "done" && "Reopen"}
+                Redo Task
               </button>
-            </div>
+            )}
+            <button
+              type="button"
+              className="flex-1 flex items-center justify-center border cursor-pointer border-border rounded-md py-1 bg-primary hover:bg-green-500 active:bg-green-600 text-white"
+            >
+              {taskDetail.status == "todo" && "Accept"}
+              {taskDetail.status == "in_progress" && "Review"}
+              {taskDetail.status == "review" && "Done"}
+              {taskDetail.status == "done" && "Reopen"}
+            </button>
           </div>
         )}
       </Modal>

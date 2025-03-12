@@ -14,7 +14,7 @@ const Overview = () => {
         <div className="">
           <div className="">
             <h4 className="text-sm text-white font-jetbrains mb-3">Request</h4>
-            <ul className="text-[11px] text-secondary list-disc list-inside marker:text-secondary">
+            <ul className="text-[11px] text-color list-disc list-inside marker:text-color">
               {project.requests.map((req) => (
                 <li key={req._id}>{req.request}</li>
               ))}
@@ -59,7 +59,7 @@ const Overview = () => {
               {project.documents.map((docs) => (
                 <div className="mt-3" key={docs._id}>
                   <h5 className="text-[11px] text-white mb-2">{docs.title}</h5>
-                  <ul className="text-[11px] text-secondary list-disc list-inside marker:text-secondary leading-5">
+                  <ul className="text-[11px] text-color list-disc list-inside marker:text-color leading-5">
                     {docs.docs.map((d) => (
                       <li key={d}>{d}</li>
                     ))}

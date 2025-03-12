@@ -89,7 +89,7 @@ const Projects = () => {
                           style={{ width: `${donePercent}%` }}
                         ></div>
                       </div>
-                      <p className="text-s text-secondary">
+                      <p className="text-s text-color">
                         {donePercent}% complete
                       </p>
                     </div>

@@ -61,10 +61,10 @@ const ManagerTeam = () => {
             prefix={<SearchOutlined className="text-secondary" />}
           />
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
+            <div className="flex items-center gap-1 text-[12px] text-color cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
               <UndoOutlined /> Recent
             </div>
-            <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
+            <div className="flex items-center gap-1 text-[12px] text-color cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
               <SwapOutlined /> All filters
             </div>
           </div>
@@ -84,7 +84,7 @@ const ManagerTeam = () => {
               </tr>
             </thead>
           )}
-          <tbody className="text-[12px] text-secondary">
+          <tbody className="text-[12px] text-color">
             {teams.length > 0 ? (
               <>
                 {teams?.map((team) => (

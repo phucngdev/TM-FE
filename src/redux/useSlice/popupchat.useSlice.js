@@ -43,6 +43,14 @@ const popupchatSlice = createSlice({
         }
       }
     },
+    addMessage: (state, action) => {
+      const { roomId, message } = action.payload;
+      const chat = state.listChat.find((c) => c.room._id === roomId);
+      if (chat) {
+        chat.room.messages.unshift(message);
+      }
+      state.listChat = [...state.listChat];
+    },
   },
 });
 
@@ -53,5 +61,6 @@ export const {
   addChat,
   resize,
   closeChatItem,
+  addMessage,
 } = popupchatSlice.actions;
 export default popupchatSlice.reducer;

@@ -6,13 +6,16 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.js";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { SocketProvider } from "./hooks/useSocket.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ThemeProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <SocketProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </SocketProvider>
     </ThemeProvider>
   </BrowserRouter>
 );

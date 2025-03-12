@@ -26,6 +26,7 @@ import { Input, message, Result, Skeleton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
+  getAllMyTasks,
   getAllTasks,
   swapTaskStatus,
   swapTaskStatusLocal,
@@ -58,6 +59,7 @@ const Tasks = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [loading, setLoading] = useState(false);
   const [spin, setSpin] = useState(false);
+  const [isMyTask, setIsMyTask] = useState(false);
 
   const handleOpenModalTask = (task) => {
     setSelectedTask(task);
@@ -67,7 +69,10 @@ const Tasks = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      await dispatch(getAllTasks(id));
+      await Promise.all([
+        dispatch(getAllTasks(id)),
+        dispatch(getAllMyTasks(id)),
+      ]);
     } catch (error) {
       message.error(error.message);
     } finally {
@@ -82,6 +87,7 @@ const Tasks = () => {
   }, [id]);
 
   const tasks = useSelector((state) => state.tasks.data);
+  const myTask = useSelector((state) => state.tasks.myTask);
 
   const itemSortTable = useMemo(() => {
     let items = [];
@@ -181,14 +187,21 @@ const Tasks = () => {
           className="w-3/5 bg-transparent hover:bg-transparent active:bg-transparent text-white focus-within:bg-transparent placeholder:text-secondary border-border"
           prefix={<SearchOutlined className="text-secondary" />}
         />
-        <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
-          <SolutionOutlined /> My tasks
-        </div>
-        <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
-          <UndoOutlined /> Recent
-        </div>
-        <div className="flex items-center gap-1 text-[12px] text-secondary cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1">
-          <SwapOutlined /> All filters
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setIsMyTask(true)}
+            className="flex items-center gap-1 text-[12px] text-color cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1"
+          >
+            <SolutionOutlined /> My tasks
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsMyTask(false)}
+            className="flex items-center gap-1 text-[12px] text-color cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md px-3 py-1"
+          >
+            <UndoOutlined /> Recent
+          </button>
         </div>
       </div>
       <div className="grid grid-cols-4 gap-4">
@@ -295,13 +308,15 @@ const Tasks = () => {
               strategy={verticalListSortingStrategy}
             >
               <Column status={status}>
-                {tasks[status]?.map((task) => (
-                  <Task
-                    key={task._id}
-                    task={task}
-                    onOpenModal={handleOpenModalTask}
-                  />
-                ))}
+                {(isMyTask ? myTask?.[status] : tasks?.[status])?.map(
+                  (task) => (
+                    <Task
+                      key={task._id}
+                      task={task}
+                      onOpenModal={handleOpenModalTask}
+                    />
+                  )
+                )}
               </Column>
               <DragOverlay dropAnimation={dropAnimation}>
                 {activeId ? (

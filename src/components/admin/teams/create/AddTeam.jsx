@@ -90,7 +90,7 @@ const AddTeam = ({ isModalCreate, setIsModalCreate }) => {
         <form onSubmit={formik.handleSubmit} className="">
           <div className="flex items-start justify-between gap-4 mt-4">
             <div className="flex flex-col flex-1">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Team name:
               </label>
               <Input
@@ -108,7 +108,7 @@ const AddTeam = ({ isModalCreate, setIsModalCreate }) => {
               ) : null}
             </div>
             <div className="flex flex-col flex-1 text-white">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Status:
               </label>
               <Select
@@ -137,7 +137,7 @@ const AddTeam = ({ isModalCreate, setIsModalCreate }) => {
           </div>
           <div className="mt-4">
             <div className="flex flex-col flex-1">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Description:
               </label>
               <TextArea
@@ -160,7 +160,7 @@ const AddTeam = ({ isModalCreate, setIsModalCreate }) => {
             </div>
           </div>
           <div className="flex flex-col mt-4">
-            <label className="text-[12px] text-secondary" htmlFor="">
+            <label className="text-[12px] text-color" htmlFor="">
               Members:
             </label>
             <Select
@@ -180,7 +180,7 @@ const AddTeam = ({ isModalCreate, setIsModalCreate }) => {
 
           <div className="flex items-start justify-between gap-4 mt-4">
             <div className="flex-1 flex flex-col">
-              <span className="text-[12px] text-secondary">Leader:</span>
+              <span className="text-[12px] text-color">Leader:</span>
               <Select
                 id="leader"
                 placeholder="leader"
@@ -195,11 +195,11 @@ const AddTeam = ({ isModalCreate, setIsModalCreate }) => {
               ) : null}
             </div>
             <div className="flex-1 flex flex-col">
-              <span className="text-[12px] text-secondary">More:</span>
-              <div className="flex items-center gap-2 text-secondary text-s">
+              <span className="text-[12px] text-color">More:</span>
+              <div className="flex items-center gap-2 text-color text-s">
                 <UserAddOutlined /> Created by: {user.name}
               </div>
-              <div className="flex items-center gap-2 text-secondary text-s">
+              <div className="flex items-center gap-2 text-color text-s">
                 <ClockCircleOutlined /> Created at: {formatDate(new Date())}
               </div>
             </div>

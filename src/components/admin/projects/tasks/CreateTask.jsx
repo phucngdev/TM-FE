@@ -152,7 +152,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
         <form onSubmit={formik.handleSubmit} className="relative">
           <div className="flex items-center gap-4 mt-4">
             <div className="flex flex-col flex-1">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Title:
               </label>
               <Input
@@ -170,7 +170,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
               ) : null}
             </div>
             <div className="flex flex-col w-1/3">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Status:
               </label>
               <Select
@@ -185,7 +185,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
           </div>
           <div className="flex items-start justify-between gap-4 mt-4">
             <div className="flex-1 flex flex-col">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Tags:
               </label>
               <Select
@@ -209,7 +209,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
               <button
                 type="button"
                 onClick={() => setIsNewTag(true)}
-                className="hover:bg-white hover:bg-opacity-20 active:bg-white active:bg-opacity-15 bg-transparent border border-border text-s text-secondary rounded-lg p-2"
+                className="hover:bg-white hover:bg-opacity-20 active:bg-white active:bg-opacity-15 bg-transparent border border-border text-s text-color rounded-lg p-2"
               >
                 New Tag
               </button>
@@ -217,7 +217,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
           </div>
           {isNewTag && (
             <div className="flex flex-col flex-1 mt-4">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 New Tag:
               </label>
               <div className="flex items-center gap-4">
@@ -239,7 +239,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
                 <button
                   type="button"
                   onClick={() => setIsNewTag(false)}
-                  className="w-20 hover:bg-white hover:bg-opacity-20 active:bg-white active:bg-opacity-15 bg-transparent border border-border text-s text-secondary rounded-lg p-2"
+                  className="w-20 hover:bg-white hover:bg-opacity-20 active:bg-white active:bg-opacity-15 bg-transparent border border-border text-s text-color rounded-lg p-2"
                 >
                   Cancel
                 </button>
@@ -252,7 +252,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
             </div>
           )}
           <div className="flex flex-col flex-1 mt-4">
-            <label className="text-[12px] text-secondary" htmlFor="">
+            <label className="text-[12px] text-color" htmlFor="">
               Description:
             </label>
             <TextArea
@@ -274,7 +274,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
             ) : null}
           </div>
           <div className="flex flex-col mt-4">
-            <label className="text-[12px] text-secondary" htmlFor="">
+            <label className="text-[12px] text-color" htmlFor="">
               Members:
             </label>
             <Select
@@ -292,14 +292,14 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
             ) : null}
           </div>
           <div className="flex flex-col gap-1 mt-4">
-            <span className="text-[12px] text-secondary">Deadline</span>
+            <span className="text-[12px] text-color">Deadline</span>
             <RangePicker
               placeholder={["Start date", "Due date"]}
               onChange={(dates) => {
                 formik.setFieldValue("start_date", dates[0].$d);
                 formik.setFieldValue("due_date", dates[1].$d);
               }}
-              className="bg-transparent text-secondary border-border hover:bg-transparent focus-within:bg-transparent"
+              className="bg-transparent text-color border-border hover:bg-transparent focus-within:bg-transparent"
             />
             {formik.touched.start_date &&
             formik.errors.start_date &&
@@ -312,12 +312,12 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
           </div>
 
           <div className="flex flex-col mt-4">
-            <label className="text-[12px] text-secondary" htmlFor="">
+            <label className="text-[12px] text-color" htmlFor="">
               Task Case:
             </label>
             {taskCase.map((t, index) => (
               <div key={index} className="flex items-center gap-3 mb-2">
-                <HolderOutlined className="text-secondary" />
+                <HolderOutlined className="text-color" />
                 <Input
                   id="task_case"
                   type="text"
@@ -335,7 +335,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
                 <button
                   type="button"
                   onClick={() => handleRemoveTaskCase(index)}
-                  className="text-secondary hover:text-white"
+                  className="text-color hover:text-white"
                 >
                   <CloseOutlined />
                 </button>
@@ -344,7 +344,7 @@ const CreateTask = ({ setIsModalCreate, isModalCreate, status }) => {
             <button
               type="button"
               onClick={() => handleAddTaskCase()}
-              className="mt-2 flex items-center justify-center border cursor-pointer border-border rounded-md py-1 bg-white bg-opacity-5 hover:bg-opacity-10 text-secondary"
+              className="mt-2 flex items-center justify-center border cursor-pointer border-border rounded-md py-1 bg-white bg-opacity-5 hover:bg-opacity-10 text-color"
             >
               Add task case
             </button>

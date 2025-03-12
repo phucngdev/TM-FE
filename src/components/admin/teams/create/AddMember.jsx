@@ -125,7 +125,7 @@ const AddMember = ({
         {!newPersonnel && (
           <>
             <div className="flex flex-col text-white mt-4 mb-8">
-              <span className="text-[12px] text-secondary">Members:</span>
+              <span className="text-[12px] text-color">Members:</span>
               <Select
                 id="members"
                 placeholder="members"
@@ -142,7 +142,7 @@ const AddMember = ({
         <form onSubmit={formik.handleSubmit} className="">
           <div className="flex items-center justify-between gap-4 mt-4">
             <div className="flex flex-col flex-1">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Username:
               </label>
               <Input
@@ -158,7 +158,7 @@ const AddMember = ({
               ) : null}
             </div>
             <div className="flex flex-col flex-1 text-white">
-              <label className="text-[12px] text-secondary" htmlFor="">
+              <label className="text-[12px] text-color" htmlFor="">
                 Password:
               </label>
               <Input.Password
@@ -184,7 +184,7 @@ const AddMember = ({
             </div>
           </div>
           <div className="flex flex-col mt-4">
-            <label className="text-[12px] text-secondary" htmlFor="">
+            <label className="text-[12px] text-color" htmlFor="">
               Email:
             </label>
             <Input
@@ -200,7 +200,7 @@ const AddMember = ({
             ) : null}
           </div>
           <div className="flex flex-col mt-4">
-            <label className="text-[12px] text-secondary" htmlFor="">
+            <label className="text-[12px] text-color" htmlFor="">
               Phone:
             </label>
             <Input
@@ -217,7 +217,7 @@ const AddMember = ({
           </div>
           <div className="flex items-start justify-between gap-4 mt-4">
             <div className="flex-1 flex flex-col">
-              <span className="text-[12px] text-secondary">Role:</span>
+              <span className="text-[12px] text-color">Role:</span>
               <Select
                 defaultValue="member"
                 className="w-full"
@@ -242,18 +242,18 @@ const AddMember = ({
               ) : null}
             </div>
             <div className="flex-1 flex flex-col">
-              <span className="text-[12px] text-secondary">More:</span>
-              <div className="flex items-center gap-2 text-secondary text-s">
+              <span className="text-[12px] text-color">More:</span>
+              <div className="flex items-center gap-2 text-color text-s">
                 <UserAddOutlined /> Created by: {user.name}
               </div>
-              <div className="flex items-center gap-2 text-secondary text-s">
+              <div className="flex items-center gap-2 text-color text-s">
                 <ClockCircleOutlined /> Created at: {formatDate(new Date())}
               </div>
             </div>
           </div>
           {formik.values.role == "Member" && (
             <div className="flex-1 flex flex-col mt-4">
-              <span className="text-[12px] text-secondary">Leader:</span>
+              <span className="text-[12px] text-color">Leader:</span>
               <Select
                 defaultValue="leader"
                 className="w-full"
@@ -269,7 +269,7 @@ const AddMember = ({
           )}
           {formik.values.role == "Lead" && (
             <div className="flex-1 flex flex-col mt-4">
-              <span className="text-[12px] text-secondary">PM:</span>
+              <span className="text-[12px] text-color">PM:</span>
               <Select
                 defaultValue="pm"
                 className="w-full"

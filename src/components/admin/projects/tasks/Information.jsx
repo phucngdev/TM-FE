@@ -15,7 +15,7 @@ const Information = () => {
             project information
           </h3>
           <div className="flex flex-col gap-2 mt-5">
-            <table className="text-s text-secondary border-separate border-spacing-y-2">
+            <table className="text-s text-color border-separate border-spacing-y-2">
               <tbody>
                 <tr className="">
                   <td colSpan={2} className="text-white">
@@ -82,14 +82,14 @@ const Information = () => {
           </div>
           <div className="mt-5">
             <span className=" text-s text-white">DESCRIPTION</span>
-            <p className="text-s text-secondary mt-1">{project.description}</p>
+            <p className="text-s text-color mt-1">{project.description}</p>
           </div>
           <div className="mt-5 flex flex-col gap-2">
             <span className=" text-s text-white">NOTES</span>
             <input
               type="text"
               placeholder="note ..."
-              className="text-s text-white placeholder:text-secondary p-2 bg-transparent border border-border rounded-lg"
+              className="text-s text-white placeholder:text-color p-2 bg-transparent border border-border rounded-lg"
             />
           </div>
           <div className="mt-5 flex flex-col gap-2">
@@ -102,11 +102,11 @@ const Information = () => {
                     </Avatar>
                     Tony Start
                   </div>
-                  <p className="text-[8px] text-secondary">
+                  <p className="text-[8px] text-color">
                     FEB 1, 2025 - 19:59 PM
                   </p>
                 </div>
-                <p className="text-s text-secondary mt-2">
+                <p className="text-s text-color mt-2">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum
                   doloribus itaque, vero numquam ut facere suscipit possimus
                   fuga.

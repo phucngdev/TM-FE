@@ -13,6 +13,18 @@ export const getAllTasks = createAsyncThunk(
   }
 );
 
+export const getAllMyTasks = createAsyncThunk(
+  "task/get-all-my-tasks",
+  async (id) => {
+    try {
+      const response = await BaseUrl.get(`task/all-my-tasks/${id}`);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 export const getOneTask = createAsyncThunk("task/get-one-task", async (id) => {
   try {
     const response = await BaseUrl.get(`task/one-task/${id}`);

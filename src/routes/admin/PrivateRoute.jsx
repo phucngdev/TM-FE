@@ -17,6 +17,7 @@ const PrivateRoute = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isOnline = useNetwork();
+  const [prevOnlineStatus, setPrevOnlineStatus] = useState(isOnline);
   const [isLogin, setIsLogin] = useState(() => {
     return document.cookie.includes("isLogin");
   });
@@ -56,8 +57,6 @@ const PrivateRoute = () => {
     }
   };
 
-  const [prevOnlineStatus, setPrevOnlineStatus] = useState(isOnline);
-
   useEffect(() => {
     if (isOnline !== prevOnlineStatus) {
       openNotification();
@@ -65,11 +64,10 @@ const PrivateRoute = () => {
     }
   }, [isOnline]);
 
-  // Kiểm tra đăng nhập và fetch dữ liệu
   useEffect(() => {
     if (isOnline && isLogin) {
       fetchData();
-    } else if (!isLogin) {
+    } else {
       message.error("Please login!");
       navigate("/login");
     }

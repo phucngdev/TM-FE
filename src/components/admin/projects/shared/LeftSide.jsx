@@ -24,7 +24,7 @@ const LeftSide = () => {
             {projects.map((project, index) => (
               <div
                 key={project._id}
-                className={`flex items-center justify-between p-2 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white ${
+                className={`flex items-center justify-between p-2 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-color hover:text-white ${
                   id == project._id ? "bg-primary text-white" : ""
                 }`}
               >
@@ -48,7 +48,7 @@ const LeftSide = () => {
           </h3>
           <div className="flex flex-col gap-1 my-2">
             <div
-              className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}
+              className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-color hover:text-white`}
             >
               <div className="flex items-center gap-1">
                 <Avatar className="bg-[#fde3cf] text-[#f56a00]">
@@ -66,7 +66,7 @@ const LeftSide = () => {
           </div>
           <div className="flex flex-col gap-1 my-2">
             <div
-              className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}
+              className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-color hover:text-white`}
             >
               <div className="flex items-center gap-1">
                 <Avatar className="bg-[#fde3cf] text-[#f56a00]">
@@ -86,7 +86,7 @@ const LeftSide = () => {
             <div key={member._id} className="flex flex-col gap-1 my-2">
               <div
                 key={member._id}
-                className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-secondary hover:text-white`}
+                className={`flex items-center justify-between px-2 py-1 border border-border rounded-md text-sm cursor-pointer hover:bg-hover text-color hover:text-white`}
               >
                 <div className="flex items-center gap-1">
                   <Avatar className="bg-[#fde3cf] text-[#f56a00]">
@@ -108,12 +108,8 @@ const LeftSide = () => {
             Time
           </h3>
           <div className="border border-border rounded-md p-2">
-            <p className="text-secondary text-s">
-              Time created: 20:15 29/12/2024
-            </p>
-            <p className="uppercase text-secondary text-[11px] mt-2">
-              Total hours
-            </p>
+            <p className="text-color text-s">Time created: 20:15 29/12/2024</p>
+            <p className="uppercase text-color text-[11px] mt-2">Total hours</p>
             <span className="text-[16px] font-bold text-white">27,3 hours</span>
           </div>
         </div>

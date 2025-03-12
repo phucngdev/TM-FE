@@ -9,7 +9,7 @@ const LeftSide = ({ team }) => {
         <h3 className="text-base text-white font-jetbrains mb-4">
           Teams - {team.name}
         </h3>
-        <table className="text-s text-secondary border-separate border-spacing-y-2">
+        <table className="text-s text-color border-separate border-spacing-y-2">
           <tbody>
             <tr className="">
               <td colSpan={2} className="text-white">

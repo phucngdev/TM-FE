@@ -48,7 +48,7 @@ const Task = ({ onOpenModal, task }) => {
             className="absolute top-0 right-0 size-16 rounded-bl-full rounded-tr-lg bg-white bg-opacity-20 hover:bg-opacity-25"
           ></div>
           <div className="">
-            <div className="flex items-center justify-between text-secondary ">
+            <div className="flex items-center justify-between text-color ">
               <div className="flex items-center gap-1">
                 {task.tags.map((t) => (
                   <p
@@ -62,7 +62,7 @@ const Task = ({ onOpenModal, task }) => {
               <VerticalAlignMiddleOutlined />
             </div>
             <h5 className="text-[12px] py-2 text-white">{task.title}</h5>
-            <p className="text-s text-secondary max-h-12 overflow-hidden text-ellipsis">
+            <p className="text-s text-color max-h-12 overflow-hidden text-ellipsis">
               {task.description}
             </p>
           </div>
@@ -83,7 +83,7 @@ const Task = ({ onOpenModal, task }) => {
                 </Avatar>
               ))}
             </Avatar.Group>
-            <div className="flex items-center gap-3 text-[12px] text-secondary">
+            <div className="flex items-center gap-3 text-[12px] text-color">
               <div className="flex items-center gap-1">
                 <EyeOutlined /> {task.viewed.length}
               </div>

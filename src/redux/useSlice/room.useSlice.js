@@ -10,9 +10,26 @@ const roomSlice = createSlice({
   initialState: {
     data: [],
     dataEdit: null,
-    chatNow: [],
+    chatNow: {},
     status: "idle",
     error: null,
+  },
+  reducers: {
+    resetMessages: (state, action) => {
+      const { roomId } = action.payload;
+      if (roomId) {
+        state.rooms[roomId] = { messages: [], page: 1, hasMore: true };
+      } else {
+        state.rooms = {};
+      }
+    },
+    addMessage: (state, action) => {
+      const { roomId, message } = action.payload;
+      if (!state.rooms[roomId]) {
+        state.rooms[roomId] = { messages: [], page: 1, hasMore: true };
+      }
+      state.rooms[roomId].messages.unshift(message);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -21,8 +38,9 @@ const roomSlice = createSlice({
       })
       .addCase(createRoom.fulfilled, (state, action) => {
         state.status = "Successfully!";
-        console.log("🚀 ~ .addCase ~ action.payload:", action.payload);
-        state.data.unshift(action.payload.newRoom);
+        if (action.payload.status === 201) {
+          state.data.unshift(action.payload.newRoom);
+        }
       })
       .addCase(createRoom.rejected, (state, action) => {
         state.status = "Failed!";

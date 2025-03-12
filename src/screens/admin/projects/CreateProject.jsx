@@ -238,7 +238,7 @@ const CreateProject = () => {
           <div className="flex items-start gap-5 justify-between">
             <div className="flex-[2] flex flex-col gap-5">
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[11px] text-secondary">
+                <label htmlFor="" className="text-[11px] text-color">
                   Name project
                 </label>
                 <Input
@@ -247,7 +247,7 @@ const CreateProject = () => {
                   value={formik.values.name}
                   onChange={formik.handleChange}
                   placeholder="project name"
-                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-secondary placeholder:text-s"
+                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-color placeholder:text-s"
                 />
                 {formik.touched.name && formik.errors.name ? (
                   <div className="text-red-500 text-s ">
@@ -256,14 +256,14 @@ const CreateProject = () => {
                 ) : null}
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[11px] text-secondary">
+                <label htmlFor="" className="text-[11px] text-color">
                   Description
                 </label>
                 <TextArea
                   id="description"
                   value={formik.values.description}
                   onChange={formik.handleChange}
-                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-secondary placeholder:text-s"
+                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-color placeholder:text-s"
                   placeholder="description"
                   autoSize={{
                     minRows: 3,
@@ -277,7 +277,7 @@ const CreateProject = () => {
                 ) : null}
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[11px] text-secondary">
+                <label htmlFor="" className="text-[11px] text-color">
                   Client
                 </label>
                 <Input
@@ -286,7 +286,7 @@ const CreateProject = () => {
                   value={formik.values.client}
                   onChange={formik.handleChange}
                   placeholder="client"
-                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-secondary placeholder:text-s"
+                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-color placeholder:text-s"
                 />
                 {formik.touched.client && formik.errors.client ? (
                   <div className="text-red-500 text-s ">
@@ -295,7 +295,7 @@ const CreateProject = () => {
                 ) : null}
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[11px] text-secondary">
+                <label htmlFor="" className="text-[11px] text-color">
                   Budget
                 </label>
                 <Input
@@ -304,7 +304,7 @@ const CreateProject = () => {
                   value={formik.values.budget}
                   onChange={formik.handleChange}
                   placeholder="budget"
-                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-secondary placeholder:text-s"
+                  className="bg-transparent focus-within:bg-transparent hover:bg-transparent placeholder:text-color placeholder:text-s"
                 />
                 {formik.touched.budget && formik.errors.budget ? (
                   <div className="text-red-500 text-s ">
@@ -313,7 +313,7 @@ const CreateProject = () => {
                 ) : null}
               </div>
               <div className="flex flex-col gap-1">
-                <span className="text-[11px] text-secondary">
+                <span className="text-[11px] text-color">
                   Start date - Due date
                 </span>
                 <RangePicker
@@ -322,7 +322,7 @@ const CreateProject = () => {
                     formik.setFieldValue("start_date", dates[0].$d);
                     formik.setFieldValue("due_date", dates[1].$d);
                   }}
-                  className="bg-transparent text-secondary border-border hover:bg-transparent focus-within:bg-transparent"
+                  className="bg-transparent text-color border-border hover:bg-transparent focus-within:bg-transparent"
                 />
                 {formik.touched.start_date && formik.errors.start_date ? (
                   <div className="text-red-500 text-s ">
@@ -338,7 +338,7 @@ const CreateProject = () => {
             </div>
             <div className="flex-[2] flex flex-col gap-5">
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[11px] text-secondary">
+                <label htmlFor="" className="text-[11px] text-color">
                   Requests
                 </label>
                 {requests.map((req, index) => (
@@ -352,13 +352,13 @@ const CreateProject = () => {
                       value={req}
                       onChange={(event) => handleChangeReq(event, index)}
                       placeholder="+ request"
-                      className="mb-3 bg-transparent !border-t-transparent !border-e-transparent !rounded-none focus-within:bg-transparent hover:bg-transparent placeholder:text-secondary placeholder:text-s"
+                      className="mb-3 bg-transparent !border-t-transparent !border-e-transparent !rounded-none focus-within:bg-transparent hover:bg-transparent placeholder:text-color placeholder:text-s"
                     />
                     {index !== 0 && (
                       <button
                         onClick={() => handleRemoveReq(index)}
                         type="button"
-                        className="flex items-center justify-center p-1 rounded-full text-secondary text-sm hover:bg-white hover:bg-opacity-20 cursor-pointer"
+                        className="flex items-center justify-center p-1 rounded-full text-color text-sm hover:bg-white hover:bg-opacity-20 cursor-pointer"
                       >
                         <CloseOutlined />
                       </button>
@@ -368,13 +368,13 @@ const CreateProject = () => {
                 <button
                   onClick={() => handleAddReq()}
                   type="button"
-                  className="mt-2 flex items-center justify-center gap-1 px-2 py-1 rounded-md w-28 border border-border cursor-pointer text-secondary text-s hover:text-white hover:bg-white hover:bg-opacity-20"
+                  className="mt-2 flex items-center justify-center gap-1 px-2 py-1 rounded-md w-28 border border-border cursor-pointer text-color text-s hover:text-white hover:bg-white hover:bg-opacity-20"
                 >
                   <PlusOutlined /> Add requests
                 </button>
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[11px] text-secondary">
+                <label htmlFor="" className="text-[11px] text-color">
                   Document
                 </label>
                 <div className="flex flex-col gap-4">
@@ -393,19 +393,19 @@ const CreateProject = () => {
                                 handleChangeTitle(event, index)
                               }
                               placeholder="+ title"
-                              className="flex-1 bg-transparent !border-t-transparent !border-e-transparent !rounded-none focus-within:bg-transparent hover:bg-transparent placeholder:text-secondary placeholder:text-s"
+                              className="flex-1 bg-transparent !border-t-transparent !border-e-transparent !rounded-none focus-within:bg-transparent hover:bg-transparent placeholder:text-color placeholder:text-s"
                             />
                             {index !== 0 && (
                               <button
                                 onClick={() => handleRemoveTitle(index)}
                                 type="button"
-                                className="flex items-center justify-center p-1 rounded-full text-secondary text-sm hover:bg-white hover:bg-opacity-20 cursor-pointer"
+                                className="flex items-center justify-center p-1 rounded-full text-color text-sm hover:bg-white hover:bg-opacity-20 cursor-pointer"
                               >
                                 <CloseOutlined />
                               </button>
                             )}
                           </div>
-                          <SwapRightOutlined className="text-secondary" />
+                          <SwapRightOutlined className="text-color" />
                         </div>
                         <div className="flex-1 flex flex-col gap-1">
                           {d.docs.map((ds, indexDocs) => (
@@ -421,7 +421,7 @@ const CreateProject = () => {
                                 }
                                 type="text"
                                 placeholder="+ docs"
-                                className=" bg-transparent !border-t-transparent !border-e-transparent !rounded-none focus-within:bg-transparent hover:bg-transparent placeholder:text-secondary placeholder:text-s"
+                                className=" bg-transparent !border-t-transparent !border-e-transparent !rounded-none focus-within:bg-transparent hover:bg-transparent placeholder:text-color placeholder:text-s"
                               />
                               {indexDocs !== 0 && (
                                 <button
@@ -429,7 +429,7 @@ const CreateProject = () => {
                                     handleRemoveDocs(index, indexDocs)
                                   }
                                   type="button"
-                                  className="flex items-center justify-center p-1 rounded-full text-secondary text-sm hover:bg-white hover:bg-opacity-20 cursor-pointer"
+                                  className="flex items-center justify-center p-1 rounded-full text-color text-sm hover:bg-white hover:bg-opacity-20 cursor-pointer"
                                 >
                                   <CloseOutlined />
                                 </button>
@@ -439,7 +439,7 @@ const CreateProject = () => {
                           <button
                             onClick={() => handleAddDocs(index)}
                             type="button"
-                            className="mt-2 flex items-center justify-center gap-1 px-2 py-1 rounded-md w-28 border border-border cursor-pointer text-secondary text-s hover:text-white hover:bg-white hover:bg-opacity-20"
+                            className="mt-2 flex items-center justify-center gap-1 px-2 py-1 rounded-md w-28 border border-border cursor-pointer text-color text-s hover:text-white hover:bg-white hover:bg-opacity-20"
                           >
                             <PlusOutlined /> Add docs
                           </button>
@@ -452,13 +452,13 @@ const CreateProject = () => {
                 <button
                   onClick={() => handleAddTitle()}
                   type="button"
-                  className="mt-2 flex items-center justify-center gap-1 px-2 py-1 rounded-md w-28 border border-border cursor-pointer text-secondary text-s hover:text-white hover:bg-white hover:bg-opacity-20"
+                  className="mt-2 flex items-center justify-center gap-1 px-2 py-1 rounded-md w-28 border border-border cursor-pointer text-color text-s hover:text-white hover:bg-white hover:bg-opacity-20"
                 >
                   <PlusOutlined /> Add title
                 </button>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="text-[11px] text-secondary">Leader</span>
+                <span className="text-[11px] text-color">Leader</span>
                 <div className="flex flex-col gap-3">
                   <Select
                     id="leaders"
@@ -471,7 +471,7 @@ const CreateProject = () => {
                     className="w-full"
                   />
                 </div>
-                <span className="text-[11px] text-secondary mt-4">Members</span>
+                <span className="text-[11px] text-color mt-4">Members</span>
                 <div className="flex flex-col gap-3">
                   <Select
                     id="members"
@@ -487,15 +487,15 @@ const CreateProject = () => {
                 </div>
                 <div className="flex items-center justify-between gap-3 my-2">
                   <div className="flex-1 h-[1px] bg-border"></div>
-                  <span className="text-secondary text-s">OR</span>
+                  <span className="text-color text-s">OR</span>
                   <div className="flex-1 h-[1px] bg-border"></div>
                 </div>
-                <span className="text-[11px] text-secondary">Teams</span>
+                <span className="text-[11px] text-color">Teams</span>
                 <div className="flex flex-col gap-3">
                   {teams.map((t) => (
                     <div
                       key={t._id}
-                      className={`flex items-center justify-between p-2 rounded-md text-[11px] text-secondary 
+                      className={`flex items-center justify-between p-2 rounded-md text-[11px] text-color 
                         ${
                           formik.values.team === t._id
                             ? "bg-white bg-opacity-20"
@@ -520,8 +520,8 @@ const CreateProject = () => {
             </div>
             <div className="flex-1 border-s border-border ps-5">
               <div className="flex flex-col gap-1">
-                <span className="text-[11px] text-secondary">Infomation</span>
-                <table className="text-s text-secondary border-separate border-spacing-y-2">
+                <span className="text-[11px] text-color">Infomation</span>
+                <table className="text-s text-color border-separate border-spacing-y-2">
                   <tbody>
                     <tr>
                       <td className="">PM:</td>

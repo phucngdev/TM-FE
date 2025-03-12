@@ -31,7 +31,7 @@ const PopupListChat = () => {
       <div className="fixed z-[99] right-[70px] bottom-10 flex flex-col gap-2">
         {listChat
           .filter((c) => c.isMinimized)
-          .map((c) => (
+          .map((c, index) => (
             <PopupChatItem
               key={c.room._id}
               room={c.room}
